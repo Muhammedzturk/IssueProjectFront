@@ -1,7 +1,6 @@
 {
 	"name": "offers-module",
 	"version": "3.0.0",
-
 	"license": "MIT",
 	"scripts": {
 		"serve": "vue-cli-service serve",
