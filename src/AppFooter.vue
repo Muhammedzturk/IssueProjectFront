@@ -1,6 +1,6 @@
 <template>
 	<div class="layout-footer">
-		<span class="font-medium ml-2">Turkuvaz İn ovasyon</span>
+		<span class="font-medium ml-2">Turkuvaz İnovasyon</span>
 	</div>
 </template>
 
