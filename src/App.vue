@@ -20,10 +20,10 @@
 </template>
 
 <script>
-import AppTopBar from './AppTopbar.vue';
-import AppMenu from './AppMenu.vue';
-import AppConfig from './AppConfig.vue';
-import AppFooter from './AppFooter.vue';
+import AppTopBar from './view/layouts/header/AppTopbar.vue';
+import AppMenu from './view/layouts/main/AppMenu.vue';
+import AppConfig from './view/config/AppConfig.vue';
+import AppFooter from './view/layouts/footer/AppFooter.vue';
 
 export default {
     data() {
@@ -35,30 +35,29 @@ export default {
             mobileMenuActive: false,
             menu : [
                 {
-                    label: 'Home',
+
                     items: [{
                         label: 'Dashboard', icon: 'pi pi-fw pi-home', to: '/'
                     },
                     ],
                 },
                 {
-                    label: 'Menu Hierarchy', icon: 'pi pi-fw pi-search',
                     items: [
                         {
                             label: 'Teklifler', icon: 'pi pi-fw pi-bookmark',
                             items: [
                                 {
-                                    label: 'Teklif Oluştur', icon: 'pi pi-fw pi-bookmark',
+                                    label: 'Teklif Oluştur', icon: 'pi pi-fw pi-user-edit',to:'offerCreate',
 
                                 },
                                 {
-                                    label: 'Teklifleri Listele', icon: 'pi pi-fw pi-bookmark',
+                                    label: 'Teklifleri Listele', icon: 'pi pi-fw pi-list',
 
                                 },
                             ]
                         },
                         {
-                            label: 'Firma Bilgileri', icon: 'pi pi-fw pi-bookmark',
+                            label: 'Firma Bilgileri', icon: 'pi pi-fw pi-info-circle',
                             items: [
                                 {
                                     label: 'Submenu 2.1', icon: 'pi pi-fw pi-bookmark',
@@ -74,7 +73,7 @@ export default {
 
                         },
                       {
-                        label: 'Kullanıcılar', icon: 'pi pi-fw pi-home', to: '/'
+                        label: 'Kullanıcılar', icon: 'pi pi-fw pi-users', to: '/users'
                       }
                     ]
                 },
@@ -174,7 +173,7 @@ export default {
             }];
         },
         logo() {
-            return (this.layoutColorMode === 'dark') ? "images/logo-white.svg" : "images/logo.svg";
+            return (this.layoutColorMode === 'dark') ? "images/logo-turkuvaz.png" : "images/logo-turkuvaz.png";
         }
     },
     beforeUpdate() {
@@ -193,5 +192,5 @@ export default {
 </script>
 
 <style lang="scss">
-@import './App.scss';
+@import 'view/sass/App';
 </style>

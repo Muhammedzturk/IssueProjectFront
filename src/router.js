@@ -1,5 +1,6 @@
 import { createRouter, createWebHashHistory } from 'vue-router';
-import Dashboard from './components/Dashboard.vue';
+import Dashboard from './view/Dashboard.vue';
+import OfferCreate from "./view/pages/Offer/OfferCreate";
 
 const routes = [
     {
@@ -8,8 +9,8 @@ const routes = [
         component: Dashboard,
     },
     {
-        path: '/formlayout',
-        name: 'formlayout',component: Dashboard,
+        path: '/offerCreate',
+        name: 'offerCreate',component: OfferCreate,
     },
     {
         path: '/input',

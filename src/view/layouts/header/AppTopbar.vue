@@ -1,7 +1,7 @@
 <template>
 	<div class="layout-topbar">
 		<router-link to="/" class="layout-topbar-logo">
-			<img alt="Logo" :src="darkTheme ? 'images/logo-turkuvaz.png' : 'images/logo-white.svg'" />
+			<img alt="Logo" :src="darkTheme ? 'images/logo-turkuvaz.png' : 'images/logo-turkuvaz.png'" />
 
 		</router-link>
 		<button class="p-link layout-menu-button layout-topbar-button" @click="onMenuToggle">
