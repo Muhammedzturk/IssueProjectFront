@@ -13,41 +13,10 @@ const routes = [
         name: 'offerCreate',component: OfferCreate,
     },
     {
-        path: '/input',
-        name: 'input',component: Dashboard,
+        path: '/users',
+        name: 'users',component: Dashboard,
     },
-    {
-        path: '/floatlabel',
-        name: 'floatlabel',component: Dashboard,
-    },
-    {
-        path: '/invalidstate',
-        name: 'invalidstate',component: Dashboard,
-    },
-    {
-        path: '/button',
-        name: 'button',component: Dashboard,
-    },
-    {
-        path: '/table',
-        name: 'table',component: Dashboard,
-    },
-    {
-        path: '/list',
-        name: 'list',component: Dashboard,
-    },
-    {
-        path: '/tree',
-        name: 'tree',component: Dashboard,
-    },
-    {
-        path: '/panel',
-        name: 'panel',component: Dashboard,
-    },
-    {
-        path: '/overlay',
-        name: 'overlay',component: Dashboard,
-    },
+
     {
         path: '/menu',component: Dashboard,
         children: [
@@ -65,43 +34,15 @@ const routes = [
             },
         ],
     },
-    {
-        path: '/messages',
-        name: 'messages',component: Dashboard,
-    },
-    {
-        path: '/file',
-        name: 'file',component: Dashboard,
-    },
-    {
-        path: '/chart',
-        name: 'chart',component: Dashboard,
-    },
-    {
-        path: '/misc',
-        name: 'misc',component: Dashboard,
-    },
-    {
-        path: '/crud',
-        name: 'crud',component: Dashboard,
-    },
-    {
-        path: '/timeline',
-        name: 'timeline',component: Dashboard,
-    },
-    {
-        path: '/empty',
-        name: 'empty',component: Dashboard,
-    },
-    {
-        path: '/documentation',
-        name: 'documentation',component: Dashboard,
-    },
+
 ];
 
 const router = createRouter({
     history: createWebHashHistory(),
     routes,
 });
-
+router.beforeEach(function(to, from, next) {
+    window.scrollTo(0, 0);
+    next();
+});
 export default router;

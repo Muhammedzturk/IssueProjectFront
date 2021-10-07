@@ -1,48 +1,38 @@
-import axios from "axios";
-import {parse} from "./responseErrorParser.service";
+import client from "./axios";
 
+export default {
+    getUserList(filterList, search) {
+        let filters = filterList.map((filterItem) => {
+            return filterItem.expression;
+        });
 
-const UsersService ={
+        if (search.item) filters.push(search.item.expression);
 
-    usersGetAll(){
-        return axios.get('/Users').then(r=>{
-            return r.data
-        }).catch(e =>{
-            return parse(e);
-        })
+        let filterQuery = {
+            FilterGroups: filters
+        };
+
+        return client().post("/user/list", filterQuery);
     },
-    userGetById(value){
-        return axios.get(`/Users/${value}`)
-            .then(r =>{
-                return r.data
-            }).catch(e=>{
-                parse(e);
-            })
+    getUserTypes() {
+        return client().get("/user/type/list");
     },
-    userPost(model){
-        return axios.post(`Users`, model)
-            .then(r=>{
-                return r.data
-            }).catch(e=>{
-                parse(e);
-            })
+    getUserInfo(userId) {
+        return client().get("/user/info/" + userId);
     },
-    userPut(value){
-        return axios.put(`Users`,value)
-            .then(r=>{
-                return r.data
-            }).catch(e =>{
-                parse(e);
-            })
+    addUser(user) {
+        return client().post("/user/add", user);
     },
-    userDelete(ID){
-        return axios.delete(`Users/${ID}`)
-            .then(r=>{
-                return r.data
-            }).catch(e=>{
-                parse(e);
-            })
+    updateUser(userId, user) {
+        return client().put("/user/update/" + userId, user);
+    },
+    updateUserStatus(userId, status) {
+        return client().put("/user/update/" + userId + "/status/" + status);
+    },
+    updateUserActivation(userId, status) {
+        return client().put("/user/update/" + userId + "/activation/" + status);
+    },
+    deleteUser(userId) {
+        return client().delete("/user/delete/" + userId);
     }
 };
-
-export default UsersService;

@@ -1,7 +1,9 @@
 <template>
 <div>
   <router-view></router-view>
-  <base-card><h2>This</h2></base-card>
+  <base-card>
+
+  </base-card>
 
 </div>
 </template>
@@ -10,10 +12,28 @@
 import BaseCard from "../../../components/UI/BaseCard";
 export default {
   name: "OfferCreate",
-  components: {BaseCard}
+  components: {BaseCard},
+  data(){
+    return{
+      IsValid:false,
+    };
+  }
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+.sizes {
+  .p-inputtext {
+    display: block;
+    margin-bottom: .5rem;
 
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+}
+
+.p-field * {
+  display: block;
+}
 </style>

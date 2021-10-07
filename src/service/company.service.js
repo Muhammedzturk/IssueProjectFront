@@ -12,7 +12,7 @@ const CompanyService ={
         })
     },
     companiesGetById(value){
-        return axios.get(`/Company/${value}`)
+        return axios.get(`/Company/Summary/${value}`)
             .then(r =>{
                 return r.data
             }).catch(e=>{

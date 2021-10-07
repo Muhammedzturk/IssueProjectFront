@@ -11,39 +11,26 @@ import App from './App.vue';
 import ApiService from '/src/service/api.service'
 
 import PrimeVue from 'primevue/config';
-import BadgeDirective from 'primevue/badgedirective';
-import ConfirmationService from 'primevue/confirmationservice';
-import Ripple from 'primevue/ripple';
-import StyleClass from 'primevue/styleclass';
-import ToastService from 'primevue/toastservice';
-import Tooltip from 'primevue/tooltip';
-import CodeHighlight from './view/config/AppCodeHighlight';
-import Button from 'primevue/button';
-import RadioButton from "primevue/radiobutton";
-import InputSwitch from "primevue/inputswitch";
-router.beforeEach(function(to, from, next) {
-    window.scrollTo(0, 0);
-    next();
-});
+
+import {prime} from "./auxiliary/components/prime";
+import {directive} from "./auxiliary/directive/directive";
+import {servce} from "./auxiliary/service/service";
+
 
 const app = createApp(App);
 
 app.config.globalProperties.$appState = reactive({ theme: 'saga-blue' });
 ApiService.init();
+
 app.use(PrimeVue, { ripple: true, inputStyle: 'outlined' });
-app.use(ConfirmationService);
-app.use(ToastService);
+
 app.use(router);
 
-app.component('Button',Button);
-app.component('RadioButton',RadioButton);
-app.component('InputSwitch',InputSwitch);
+prime(app);
+directive(app);
+servce(app);
 
-app.directive('tooltip', Tooltip);
-app.directive('ripple', Ripple);
-app.directive('code', CodeHighlight);
-app.directive('badge', BadgeDirective);
-app.directive('styleclass', StyleClass);
+
 
 
 
