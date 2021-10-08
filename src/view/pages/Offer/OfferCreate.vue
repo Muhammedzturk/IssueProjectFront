@@ -4,7 +4,7 @@
       <div class=" p-md-6 p-fluid">
         <h6>Yeni Teklif Oluştur</h6>
         <div class="card">
-          <small class="ml-2">Teklif Numarası</small>
+          <small class="ml-2">Teklif Numarası </small>
           <div class="grid formgrid col-12">
 
             <div class="col-2 mb-4 ">
