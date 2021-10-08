@@ -4,6 +4,8 @@ import InputSwitch from "primevue/inputswitch";
 import TabView from 'primevue/tabview';
 import TabPanel from 'primevue/tabpanel';
 import InputText from 'primevue/inputtext';
+import Dialog from 'primevue/dialog';
+import Calendar from 'primevue/calendar';
 export const prime = (app) => {
 
     app.component('Button',Button);
@@ -12,4 +14,6 @@ export const prime = (app) => {
     app.component('TabPanel',TabPanel);
     app.component('RadioButton',RadioButton);
     app.component('InputSwitch',InputSwitch);
+    app.component('Dialog',Dialog);
+    app.component('Calendar',Calendar);
 }
