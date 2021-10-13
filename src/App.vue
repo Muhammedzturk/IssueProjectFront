@@ -60,12 +60,8 @@ export default {
                             label: 'Firma Bilgileri', icon: 'pi pi-fw pi-info-circle',
                             items: [
                                 {
-                                    label: 'Submenu 2.1', icon: 'pi pi-fw pi-bookmark',
-                                    items: [
-                                        {label: 'Submenu 2.1.1', icon: 'pi pi-fw pi-bookmark'},
-                                        {label: 'Submenu 2.1.2', icon: 'pi pi-fw pi-bookmark'},
-                                        {label: 'Submenu 2.1.3', icon: 'pi pi-fw pi-bookmark'},
-                                    ]
+                                    label: 'Firma Oluştur', icon: 'pi pi-fw pi-plus', to:'/companyCreate',
+
                                 },
 
 

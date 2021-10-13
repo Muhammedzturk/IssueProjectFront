@@ -47,7 +47,7 @@
                       <Column field="offerDefinition" header="Teklif Tanımı"></Column>
                       <Column field="currency" header="Para Birimi"></Column>
                       <Column field="unitPrice" header="Birim Fiyat"></Column>
-                      <Column field="profitRate" header="KarOranı"></Column>
+                      <Column field="profitRate" header="Kar Oranı"></Column>
                       <Column field="quantity" header="Miktar"></Column>
                       <Column field="totalprice" header="Toplam Fiyat"></Column>
                     </DataTable>
