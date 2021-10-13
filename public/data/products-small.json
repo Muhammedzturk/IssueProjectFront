@@ -1,124 +1,14 @@
 {
 	"data": [
-		{
-			"id": "1000",
-			"code": "f230fh0g3",
-			"name": "Bamboo Watch",
-			"description": "Product Description",
-			"image": "bamboo-watch.jpg",
-			"price": 65,
-			"category": "Accessories",
-			"quantity": 24,
-			"inventoryStatus": "INSTOCK",
-			"rating": 5
-		},
-		{
-			"id": "1001",
-			"code": "nvklal433",
-			"name": "Black Watch",
-			"description": "Product Description",
-			"image": "black-watch.jpg",
-			"price": 72,
-			"category": "Accessories",
-			"quantity": 61,
-			"inventoryStatus": "INSTOCK",
-			"rating": 4
-		},
-		{
-			"id": "1002",
-			"code": "zz21cz3c1",
-			"name": "Blue Band",
-			"description": "Product Description",
-			"image": "blue-band.jpg",
-			"price": 79,
-			"category": "Fitness",
-			"quantity": 2,
-			"inventoryStatus": "LOWSTOCK",
-			"rating": 3
-		},
-		{
-			"id": "1003",
-			"code": "244wgerg2",
-			"name": "Blue T-Shirt",
-			"description": "Product Description",
-			"image": "blue-t-shirt.jpg",
-			"price": 29,
-			"category": "Clothing",
-			"quantity": 25,
-			"inventoryStatus": "INSTOCK",
-			"rating": 5
-		},
-		{
-			"id": "1004",
-			"code": "h456wer53",
-			"name": "Bracelet",
-			"description": "Product Description",
-			"image": "bracelet.jpg",
-			"price": 15,
-			"category": "Accessories",
-			"quantity": 73,
-			"inventoryStatus": "INSTOCK",
-			"rating": 4
-		},
-		{
-			"id": "1005",
-			"code": "av2231fwg",
-			"name": "Brown Purse",
-			"description": "Product Description",
-			"image": "brown-purse.jpg",
-			"price": 120,
-			"category": "Accessories",
-			"quantity": 0,
-			"inventoryStatus": "OUTOFSTOCK",
-			"rating": 4
-		},
-		{
-			"id": "1006",
-			"code": "bib36pfvm",
-			"name": "Chakra Bracelet",
-			"description": "Product Description",
-			"image": "chakra-bracelet.jpg",
-			"price": 32,
-			"category": "Accessories",
-			"quantity": 5,
-			"inventoryStatus": "LOWSTOCK",
-			"rating": 3
-		},
-		{
-			"id": "1007",
-			"code": "mbvjkgip5",
-			"name": "Galaxy Earrings",
-			"description": "Product Description",
-			"image": "galaxy-earrings.jpg",
-			"price": 34,
-			"category": "Accessories",
-			"quantity": 23,
-			"inventoryStatus": "INSTOCK",
-			"rating": 5
-		},
-		{
-			"id": "1008",
-			"code": "vbb124btr",
-			"name": "Game Controller",
-			"description": "Product Description",
-			"image": "game-controller.jpg",
-			"price": 99,
-			"category": "Electronics",
-			"quantity": 2,
-			"inventoryStatus": "LOWSTOCK",
-			"rating": 4
-		},
-		{
-			"id": "1009",
-			"code": "cm230f032",
-			"name": "Gaming Set",
-			"description": "Product Description",
-			"image": "gaming-set.jpg",
-			"price": 299,
-			"category": "Electronics",
-			"quantity": 63,
-			"inventoryStatus": "INSTOCK",
-			"rating": 3
-		}
+		{"id": "1000","rowNumber": "1","offerDefinition": "Bamboo Watch","quantity": "1","unitCost": "13","unitProfit": 65,"unitPrice": "555555","profitRate": 24,"salePrice": "15151","unitCurrency": "TL","saleCurrency":"EURO","totalPrice" : 10},
+		{"id": "1001","rowNumber": "2","offerDefinition": "Black Watch","quantity": "1","unitCost": "14","unitProfit": 72,"unitPrice": "2222","profitRate": 61,"salePrice": "133333","unitCurrency": "TL","saleCurrency":"EURO","totalPrice" : 10},
+		{"id": "1002","rowNumber": "3","offerDefinition": "Blue Band","quantity": "1","unitCost": "23","unitProfit": 79,"unitPrice": "3333","profitRate": 2,"salePrice": "1221312","unitCurrency": "TL","saleCurrency":"EURO","totalPrice" : 10},
+		{"id": "1003","rowNumber": "4","offerDefinition": "Blue T-Shirt","quantity": "1","unitCost": "23","unitProfit": 29,"unitPrice": "444444","profitRate": 25,"salePrice": "3212112","unitCurrency":"TL","saleCurrency":"EURO","totalPrice" : 10},
+		{"id": "1004","rowNumber": "5","offerDefinition": "Bracelet","quantity": "1","unitCost": "23","unitProfit": 15,"unitPrice": "55555","profitRate": 73,"salePrice": "12312","unitCurrency": "TL","saleCurrency":"EURO","totalPrice" : 10},
+		{"id": "1005","rowNumber": "3","offerDefinition": "Brown Purse","quantity": "1","unitCost": "23","unitProfit": 120,"unitPrice": "3323223","profitRate": 0,"salePrice": "123123","unitCurrency": "EURO","saleCurrency":"EURO","totalPrice" : 10,"totalPrice" : 10},
+		{"id": "1006","rowNumber": "4","offerDefinition": "Chakra Bracelet","quantity": "1","unitCost": "23","unitProfit": 32,"unitPrice": "2342423","profitRate": 5,"salePrice": "123213","unitCurrency": "EURO","saleCurrency":"EURO","totalPrice" : 10},
+		{"id": "1007","rowNumber": "5","offerDefinition": "Galaxy Earrings","quantity": "1","unitCost": "23","unitProfit": 34,"unitPrice": "23424234","profitRate": 23,"salePrice": "123123123","unitCurrency": "EURO","saleCurrency":"EURO","totalPrice" : 10},
+		{"id": "1008","rowNumber": "5","offerDefinition": "Game Controller","quantity": "1","unitCost": "23","unitProfit": 99,"unitPrice": "23423423","profitRate": 2,"salePrice": "213123","unitCurrency": "EURO","saleCurrency":"EURO","totalPrice" : 10},
+		{"id": "1009","rowNumber": "5","offerDefinition": "Gaming Set","quantity": "1","unitCost": "23","unitProfit": 299,"unitPrice": "23432","profitRate": 63,"salePrice": "1231","unitCurrency": "EURO","saleCurrency":"EURO","totalPrice" : 10}
 	]
 }

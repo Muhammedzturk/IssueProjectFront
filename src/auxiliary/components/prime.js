@@ -15,6 +15,7 @@ import Column from "primevue/column";
 import Textarea from 'primevue/textarea';
 import Editor from 'primevue/editor';
 import SplitButton from 'primevue/splitbutton';
+import ColumnGroup from 'primevue/columngroup';
 export const prime = (app) => {
 
     app.component('Button',Button);
@@ -34,4 +35,5 @@ export const prime = (app) => {
     app.component('Textarea',Textarea);
     app.component('Editor',Editor);
     app.component('SplitButton',SplitButton);
+    app.component('ColumnGroup',ColumnGroup);
 }
