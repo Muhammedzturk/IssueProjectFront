@@ -16,6 +16,11 @@ import Textarea from 'primevue/textarea';
 import Editor from 'primevue/editor';
 import SplitButton from 'primevue/splitbutton';
 import ColumnGroup from 'primevue/columngroup';
+import InputMask from 'primevue/inputmask';
+import InputNumber from 'primevue/inputnumber';
+import {PrimeIcons} from 'primevue/api';
+
+
 export const prime = (app) => {
 
     app.component('Button',Button);
@@ -36,4 +41,8 @@ export const prime = (app) => {
     app.component('Editor',Editor);
     app.component('SplitButton',SplitButton);
     app.component('ColumnGroup',ColumnGroup);
+    app.component('InputMask',InputMask);
+    app.component('InputNumber',InputNumber);
+    app.component('PrimeIcons',PrimeIcons);
+
 }
