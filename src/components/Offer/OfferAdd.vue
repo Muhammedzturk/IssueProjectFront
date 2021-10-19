@@ -3,23 +3,7 @@
     <div class="p-grid p-formgrid">
       <TabView>
         <TabPanel header="Teklif Bilgisi">
-
-            <div class="col-4">
-                    <span class="p-buttonset">
-                      <Button style="border-radius: 6px; background-color: green" class="mr-1"  label="Kaydet" icon="pi pi-check" />
-                      <Button style="border-radius: 6px; background-color: dodgerblue"  class="mr-1" label="Güncelle" icon="pi pi-refresh" />
-                      <Button style="border-radius: 6px; background-color: darkred" label="Sil" icon=" pi pi-trash" />
-                    </span>
-
-            </div>
-<!--            <div>
-              <DataTable :value="cars" class="p-datatable-sm">
-                <Column v-for="col of columns" :field="col.field"  :header="col.header" :style="{'width':col.width,'text-align':col.align}"  :key="col.field"></Column>
-              </DataTable>
-            </div>-->
-
-
-                <DataTable :value="products2" editMode="row" dataKey="id" v-model:editingRows="editingRows" @row-edit-save="onRowEditSave" responsiveLayout="scroll">
+                <DataTable :value="products2" editMode="row" dataKey="id" v-model:editingRows="editingRows"  responsiveLayout="scroll">
                   <Column field="rowNumber" header="S.No" style="width:50px">
                     <template #editor="{ data, field }">
                       <InputText v-model="data[field]" autofocus />
@@ -34,7 +18,6 @@
                     <template #editor="{ data, field }">
                       <InputText v-model="data[field]" style="width:50px"/>
                     </template>
-
                   </Column>
                   <Column field="unitCurrency" header="Birim Para Birimi" style="width:80px">
                     <template #editor="{ data, field }">
@@ -60,77 +43,60 @@
                       <InputText v-model="data[field]" style="width:70px"/>
                     </template>
                   </Column>
-                  <Column field="profitRate" header="Kar Oranı" style="width:50px">
-                    <template #editor="{ data, field }">
-                      <InputText v-model="data[field]" style="width:50px"/>
-                    </template>
-                  </Column>
                   <Column field="salePrice" header="Satış Fiyatı" style="width:50px">
                     <template #editor="{ data, field }">
                       <InputText v-model="data[field]" style="width:70px"/>
                     </template>
                   </Column>
-
                   <Column field="totalPrice" header="Toplam Fiyat " style="width:50px" >
                     <template #editor="{ data, field }">
                       <InputText v-model="data[field]" style="width:70px"/>
                     </template>
                   </Column>
-                  <Column :rowEditor="true" style="width:50px;" bodyStyle="text-align:center"></Column>
                 </DataTable>
-
-
-
         </TabPanel>
         <TabPanel header="Ticari Koşullar">
-          <div class="card">
             <div>
               <Editor v-model="value3" editorStyle="height: 320px" placeholder="Ticari Koşullar"/>
             </div>
-            <div class="col-2 ml-auto mt-1 ">
-              <SplitButton label="Save" icon="pi pi-plus" :model="buttons"></SplitButton>
-            </div>
-          </div>
         </TabPanel>
-
         <TabPanel header=" Teklif Süre Bilgisi">
-          <div class="card">
             <div>
               <Editor v-model="value1" editorStyle="height: 320px" placeholder="Teklif Süre Bilgisi"/>
             </div>
-            <div class="col-2 ml-auto mt-1 ">
-              <SplitButton label="Save" icon="pi pi-plus" :model="buttons"></SplitButton>
-            </div>
-          </div>
         </TabPanel>
-
         <TabPanel header="Teklif Açıklamaları">
-          <div class="card">
             <div>
               <Editor v-model="value2" editorStyle="height: 320px" placeholder="Teklif Açıklamaları"/>
             </div>
-            <div class="col-2 ml-auto mt-1 ">
-              <SplitButton label="Save" icon="pi pi-plus" :model="buttons"></SplitButton>
-            </div>
-          </div>
         </TabPanel>
       </TabView>
 
+
+      <offer-modal-form  @dialog-data="CalcPrice" :profitTop="profitTop" @error-info="errorInfo">
+        <Button   label="Kaydet" class=" p-button-help" @click="save"/>
+      </offer-modal-form>
     </div>
+
   </div>
 </template>
 
 <script>
 import { ref,onMounted  } from "vue";
 import ProductService from "../../service/ProductService";
+import OfferModalForm from "./OfferModalForm";
 
 export default {
   name: "OfferAdd",
-  setup() {
+  components:{
+    OfferModalForm
+  },
+  props: ['profitTop'],
+  emits:['error-check'],
+  setup(props,{emit}) {
     onMounted(() => {
       productService.value.getProductsSmall().then(data => products2.value = data);
     });
-
     const productService = ref(new ProductService());
     const editingRows = ref([]);
 
@@ -141,22 +107,43 @@ export default {
       {label: 'Dolar', value: 'DOLAR'}
     ]);
 
-    const onRowEditSave = (event) => {
-      let { newData, index } = event;
-      products2.value[index] = newData;
+    //methods
+    const save = () => {
+      emit("error-check",true)
+    }
+    const errorInfo = (check) => {
+      emit("error-check",check)
+    }
+    const getUnitLabel = (unit) => {
+      switch(unit) {
+        case 'EURO':
+          return '€';
+
+        case 'TL':
+          return '₺';
+
+        case 'DOLAR':
+          return '$';
+
+        default:
+          return ' ';
+      }
     };
-/*    const columns = ref([
-      {field: 'rowNumber', header: 'S.No', width: '50px',align:'center' },
-      {field: 'offerDefinition', header: 'Teklif Tanımı',width: '300px',align:'center'},
-      {field: 'quantity', header: 'Miktar',width: '',align:'center'},
-      {field: 'unitCost', header: 'Birim Maliyet',width: '',align:'center'},
-      {field: 'unitProfit', header: 'Birim Kar',width: '',align:'center'},
-      {field: 'unitPrice', header: 'Birim Fiyat',width: '',align:'center'},
-      {field: 'profitRate', header: 'Kar Oranı',width: '',align:'center'},
-      {field: 'salePrice', header: 'Satış Fiyatı',width: '',align:'center'},
-      {field: 'currency', header: 'Para Birimi',width: '',align:'center'},
-      {field: 'totalPrice', header: 'Toplam Fiyat',width: '150px',align:'center'},
-    ]);*/
+    const CalcPrice = (data) => {
+      const calcTopProfitRate = data.totalPrice*(props.profitTop.value/100);
+      products2.value.push({
+        offerDefinition : data.selectedCompany.value,
+        unitCost : data.cost,
+        unitProfit : data.profit,
+        unitPrice : data.totalPrice+' '+getUnitLabel(data.selectedCurrency.toString()),
+        unitCurrency : data.selectedCurrency,
+        quantity : data.quantity,
+        salePrice:(data.totalPrice+calcTopProfitRate).toFixed(2),
+        totalPrice:((data.totalPrice+calcTopProfitRate).toFixed(2)*data.quantity).toFixed(2)
+      })
+    };
+
+    //end methods
     const buttons = ref([
       {
         label: 'Update',
@@ -199,8 +186,12 @@ export default {
       products,
       offerModel,
       buttons,
-      productService, editingRows,  products2, unit
-      , onRowEditSave
+      productService, editingRows,  products2, unit,
+      CalcPrice,
+      getUnitLabel,
+      save,
+      errorInfo
+
     };
   },
 }

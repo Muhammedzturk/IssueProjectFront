@@ -1,10 +1,10 @@
 <template>
   <div class="card">
     <div class="grid formgrid">
-      <div class="col-4 mb-4 p-inputgroup">
-
+      <div class="col-4 mb-4 ">
+      <div class="p-inputgroup">
         <AutoComplete
-            v-model="selected.selectedCompany"
+            v-model="state.selectedCompany"
             :suggestions="filteredCompany"
             @complete="searchOffer($event)"
             field="label"
@@ -15,70 +15,84 @@
                         <i class="pi pi-plus"></i>
                     </span>
       </div>
-      <div class="col-4  "  >
-        <Dropdown v-model="selected.selectedAccount" :options="items.values" option-value="value" optionLabel="label" placeholder="Firma İlgili Seç" />
+        <span class="p-error" v-if="v$.selectedCompany.$error && errorCheck">
+          {{errorCheck}}
+             Lütfen Firma Seçiniz.
+            </span>
+      </div>
+
+
+
+      <div class="col-4">
+        <Dropdown v-model="state.selectedAccount" :options="items.values" option-value="value" optionLabel="label" placeholder="Firma İlgili Seç" />
+        <span class="p-error" v-if="v$.selectedAccount.$error && errorCheck">
+             Seçili Firmaya Ait Bir İlgili Seçiniz.
+            </span>
       </div>
     </div>
     <div class="grid formgrid">
-
       <div class="col-4 mb-4 ">
         <label class=" mt-2">Teklif Numarası: </label>
               <span class="p-float-label">
-              <InputText id="offerPrefix" class="p-inputtext-sm"  type="text" v-model="offerModel.offerPrefix" disabled="true"></InputText>
+              <InputText id="offerPrefix" class="p-inputtext-sm"  type="text" v-model="state.offerNumber" disabled="true"></InputText>
                 <label for="offerPrefix">Ön Ek/Teklif No/Rev. No</label>
               </span>
+        <span class="p-error" v-if="v$.offerNumber.$error && errorCheck">
+             Teklif Numarası Boş Olamaz.
+            </span>
       </div>
-
       <div class="col-4 mr-6">
         <label class="  mr-2 mt-2" for="offerdate">Teklif Tarihi:</label>
-        <Calendar  v-model="offerModel.offerDate" class="p-inputtext-sm" :showButtonBar="true" :showIcon="true" />
+        <Calendar  v-model="state.offerDate" dateFormat="dd.mm.yy" class="p-inputtext-sm" :showButtonBar="true" :showIcon="true" />
+        <span class="p-error" v-if="v$.offerDate.$error && errorCheck">
+             Teklif Tarihi Boş Olamaz.
+            </span>
       </div>
-
-
       <div class="col-3 ">
         <label  for="offerdate">Teklif Geçerlilik Tarihi:</label>
-        <Calendar  v-model="offerModel.offerValidityDate" class="p-inputtext-sm" :showButtonBar="true" :showIcon="true" />
+        <Calendar  v-model="state.offerValidityDate" dateFormat="dd.mm.yy" class="p-inputtext-sm" :showButtonBar="true" :showIcon="true" />
+        <span class="p-error" v-if="v$.offerValidityDate.$error && errorCheck">
+             Teklif Geçerlilik Tarihi Boş Olamaz.
+            </span>
       </div>
     </div>
-
     <div class="grid formgrid">
       <div class="col-12 mb-4 ">
         <span class="p-float-label">
-          <InputText id="offerPrefix" class="p-inputtext-lg"  type="text" v-model="offerModel.offerDefinition"></InputText>
+          <InputText id="offerPrefix" class="p-inputtext-lg"  type="text" v-model="state.offerDefinition"></InputText>
                 <label for="offerPrefix">Teklifin Konusu</label>
         </span>
+        <span class="p-error" v-if="v$.offerDefinition.$error && errorCheck">
+             Teklifin Konusu Boş Olamaz.
+            </span>
       </div>
     </div>
     <div class="grid formgrid">
-
       <div class="col-2 mb-4 ">
-        <Dropdown v-model="selected.selectedCurrency" :options="unit" optionLabel="label" optionValue="value" placeholder="Para Birimi" />
+        <Dropdown v-model="state.selectedCurrency" :options="unit" optionLabel="label" optionValue="value" placeholder="Para Birimi" />
+        <span class="p-error" v-if="v$.selectedCurrency.$error && errorCheck">
+             Lütfen Para Birimini Seçiniz.
+            </span>
       </div>
-
       <div class="col-2 mr-6">
-         <span class="p-float-label">
-          <InputText id="offerPrefix"    type="text" v-model="profit" ></InputText>
-                <label for="offerPrefix">Kar</label>
-        </span>
-
-      </div>
-      <div class="col-2 ">
-
-        <IFRAME name="doviz-fiyat" src="http://www.altinpiyasa.com/site/doviz-fiyatlari.asp" width="200" height="70" allowtransparency="true" scrolling="no" frameborder="0"
-        marginwidth="0" marginheight="0"></IFRAME>
-
+              <InputNumber prefix="%" mode="decimal"  :minFractionDigits="2" id="profit" v-model="state.profit" placeholder="Kar"/>
+        <span class="p-error" v-if="v$.profit.$error && errorCheck">
+             Kar Oranı Boş Geçilemez.
+            </span>
       </div>
     </div>
-
   </div>
 </template>
 
 <script>
-import {ref,watch} from 'vue';
+import {ref,watch,reactive,computed } from 'vue';
 import router from "../../router";
+import { useVuelidate } from "@vuelidate/core";
+import {  required } from "@vuelidate/validators";
 export default {
-
-  setup(){
+  emits: ['profit-data' ],
+  props:['check'],
+  setup(props,{ emit }){
     const unit = ref([
       {label: 'TL', value: 'TL'},
       {label: 'Euro', value: 'EURO'},
@@ -89,45 +103,70 @@ export default {
       {label: 'Frankfurt', value: 'Frankfurt'},
       {label: 'Hamburg', value: 'Hamburg'},
       {label: 'Munich', value: 'Munich'}]);
-
-    const offerModel= ref({
+    const filteredOffers=ref(null);
+    const filteredCompany=ref(null);
+    const errorCheck=ref(computed(() => props.check));
+    const profit=ref(null);
+    const state = reactive({
       offerValidityDate:null,
-      offerPrefix:null,
+      //offerPrefix:null,
       offerNumber:null,
       offerDefinition:null,
-      revisionNumber:null,
+     // revisionNumber:null,
       offerDate:new Date(),
-    });
-    const selected = ref({
       selectedOffer:'',
       selectedCompany:'',
       selectedAccount:'',
-      selectedCurrency:''
-    });
-        const filteredOffers=ref(null);
-        const filteredCompany=ref(null);
-        const IsShow=ref(false);
-        const profit=ref('');
+      selectedCurrency:'',
+      profit:null
+    })
+     const rules = computed(() => {
+       return{
+         offerValidityDate:{required},
+         offerNumber:{required},
+         offerDefinition:{required},
+         offerDate:{required},
+         selectedCompany:{required},
+         selectedCurrency:{required},
+         selectedAccount:{required},
+         profit:{required},
+
+       }
+     })
+      const v$ = useVuelidate(rules, state);
+      console.log("v$ top",v$)
+      v$.value.$validate();
+
+    console.log("errorcheck",errorCheck)
+    console.log("v$.value.$error",v$.value.$error)
+    console.log("v$.value.$validate();",v$.value.$validate())
+
+    console.log("props.check",props.check)
+
 
         //watch
-        watch(() => selected.value.selectedCompany,(value) =>{
+        watch(() => state.selectedCompany,(value) =>{
           console.log("value",value)
           const selectValue = items.value.filter( f => f.label == value.label)
           console.log("selectValue",selectValue)
-
-          if(selectValue.length>0){
-            IsShow.value = true
-          }else{
-            IsShow.value = false
-          }
         });
-        watch(() => offerModel.value.offerDate,(dateValue) => {
+
+        watch(() => [state.profit,state.selectedCurrency],([value,currency]) =>{
+          console.log("profitdata",value)
+          console.log("currency",currency)
+          const profitObject={
+            value:value,
+            currency:currency
+          }
+          emit("profit-data",profitObject)
+        });
+        watch(() => state.offerDate,(dateValue) => {
           const nowDate = addDays(dateValue,15);
           console.log("nowDate",nowDate)
-          if(offerModel.value.offerValidityDate < nowDate){
+          if(state.offerValidityDate < nowDate){
             console.log("date burası")
           }
-          offerModel.value.offerValidityDate = nowDate
+          state.offerValidityDate = nowDate
 
         });
         //watch end
@@ -155,19 +194,20 @@ export default {
         //methods end
 
         return {
-          offerModel ,
-          selected,
+          state,
           filteredOffers,
           filteredCompany,
-          IsShow,
+          errorCheck,
           items,
           unit,
           profit,
+          v$,
           addDays,
           companyPage,
           searchOffer
         }
   }
+
 }
 </script>
 <style scoped>
