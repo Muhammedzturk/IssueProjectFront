@@ -9,6 +9,4 @@ export default class CustomerService {
             .then(d => d.data);
     }
 
-
-
 }

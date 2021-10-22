@@ -17,6 +17,7 @@
             <div class="layout-mask p-component-overlay" v-if="mobileMenuActive"></div>
         </transition>
 	</div>
+  <Toast></Toast>
 </template>
 
 <script>
@@ -51,7 +52,7 @@ export default {
 
                                 },
                                 {
-                                    label: 'Teklifleri Listele', icon: 'pi pi-fw pi-list',
+                                    label: 'Teklifleri Listele', icon: 'pi pi-fw pi-list',to:'offersList',
 
                                 },
                             ]

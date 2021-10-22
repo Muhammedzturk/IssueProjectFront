@@ -3,7 +3,7 @@ import axios from "axios";
 
 const ApiService = {
     init(){
-        axios.defaults.baseURL ="http://localhost:41986";
+        axios.defaults.baseURL ="http://localhost:44357";
         console.log("burası",axios.defaults.baseURL)
     },
 

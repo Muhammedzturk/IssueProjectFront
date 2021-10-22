@@ -9,7 +9,7 @@ import { createApp, reactive } from 'vue';
 import router from './router';
 import App from './App.vue';
 import ApiService from '/src/service/api.service'
-
+import ToastService from 'primevue/toastservice';
 import PrimeVue from 'primevue/config';
 
 import {prime} from "./auxiliary/components/prime";
@@ -23,7 +23,7 @@ app.config.globalProperties.$appState = reactive({ theme: 'saga-blue' });
 ApiService.init();
 
 app.use(PrimeVue, { ripple: true, inputStyle: 'outlined' });
-
+app.use(ToastService)
 app.use(router);
 
 prime(app);

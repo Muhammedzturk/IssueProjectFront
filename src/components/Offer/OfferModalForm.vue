@@ -1,7 +1,7 @@
 <template>
   <div class="grid">
   <div class="col-2  ">
-    <Button label="Teklif Ekle" class="p-button-secondary" @click="openModal"/>
+    <Button label="Detay Ekle" class="p-button-secondary" @click="openModal"/>
   </div>
   <div class="col-2 ml-auto">
     <slot></slot>
@@ -58,7 +58,7 @@
             </span>
           </div>
           <div class="p-fluid col-6">
-            <label  for="totalprice">Toplam Fiyat</label>
+            <label  for="totalprice">Birim Fiyat</label>
             <InputNumber id="totalprice" v-model="state.totalPrice" disabled="true"/>
           </div>
 
@@ -66,7 +66,7 @@
         <div class="grid mt-1">
           <div style="display: grid" class="p-fluid col-6  mt-2">
             <label  for="selectedOption">Seçenek</label>
-            <Dropdown v-model="offerModel.selectedOption" :options="items" optionLabel="label" optionValue="value" id="selectedOption" placeholder="Seçenek No" />
+            <Dropdown v-model="state.selectedOption" :options="optionsItem" optionLabel="label" optionValue="value" id="selectedOption" placeholder="Seçenek No" />
           </div>
         </div>
       </div>
@@ -83,25 +83,18 @@
 import {reactive, ref, watch,computed} from "vue";
 import { useVuelidate } from "@vuelidate/core";
 import {  required } from "@vuelidate/validators";
+import {useToast} from "primevue/usetoast";
+
 export default {
   name: "OfferModalForm",
   emits: ['dialog-data','error-info'],
   props:['profitTop'],
   setup(props,{ emit }){
-    const resetForm = () => {
-      offerModel.value.selectedCompany ='',
-      offerModel.value.selectedOption='',
-      offerModel.value.selectedCurrency='',
-      offerModel.value.profit=null,
-      offerModel.value.quantity=null,
-      offerModel.value.cost=null,
-      offerModel.value.totalPrice=0
-    }
-
+    const toast = useToast();
     const rules = computed(() => {
       return {
         selectedCompany: {required},
-        //selectedOption: {required},
+        selectedOption: {required},
         selectedCurrency: {required},
         quantity: {required},
         cost: {required},
@@ -109,6 +102,16 @@ export default {
         profit: {required}
     }
     });
+    const state = reactive({
+      id:1,
+      selectedCompany: "",
+      selectedOption:  " ",
+      selectedCurrency: " ",
+      profit:null,
+      quantity:null,
+      cost:null,
+      totalPrice:0
+    })
     const unit = ref([
       {label: 'TL', value: 'TL'},
       {label: 'Euro', value: 'EURO'},
@@ -119,30 +122,19 @@ export default {
       {label: 'Frankfurt', value: 'Frankfurt'},
       {label: 'Hamburg', value: 'Hamburg'},
       {label: 'Munich', value: 'Munich'}]);
-
-    const state = reactive({
-      selectedCompany: "",
-      selectedOption:  " ",
-      selectedCurrency: " ",
-      profit:null,
-      quantity:null,
-      cost:null,
-      totalPrice:0
-    })
-
-    const offerModel = ref({
-      selectedCompany :'',
-      selectedOption:'',
-      selectedCurrency:'',
-      profit:null,
-      quantity:null,
-      cost:null,
-      totalPrice:0
-
-    })
+    const optionsItem = ref([
+      {label: '1.Seçenek', value: '1.Seçenek'},
+      {label: '2.Seçenek', value: '2.Seçenek'},
+      {label: '3.Seçenek', value: '3.Seçenek'},
+      {label: '4.Seçenek', value: '4.Seçenek'},
+      {label: '5.Seçenek', value: '5.Seçenek'},
+      {label: '6.Seçenek', value: '6.Seçenek'},
+      {label: '7.Seçenek', value: '7.Seçenek'},
+      {label: '8.Seçenek', value: '8.Seçenek'},
+      {label: '9.Seçenek', value: '9.Seçenek'},
+      {label: '10.Seçenek', value: '10.Seçenek'},
+    ]);
     const v$ = useVuelidate(rules, state);
-
-    console.log("v$22",v$)
     const definition = ref('')
     const submitted = ref(false);
 
@@ -152,24 +144,29 @@ export default {
     //methods
     const openModal = () => {
       displayModal.value = true;
+      state.id+=1;
     };
     const addOfferData = () => {
       v$.value.$validate();
       submitted.value=true
-      console.log("v$",v$)
       if(!v$.value.$error){
         //success
         if(props.profitTop.value == null && props.profitTop.currency ==null){
           displayModal.value = false;
           emit("error-info",true)
+          window.scrollTo(0, 0);
+          toast.add({severity:'error', summary: 'Ekleme İşlemi Başarısız',
+            detail:'Lütfen Boş Yerleri Doldurun!', life: 4000});
           return;
         }
         emit("error-info",false)
         displayModal.value = false;
+        toast.add({severity:'success', summary: 'Ekleme İşlemi Başarılı',
+           life: 4000});
+
         emit("dialog-data",state)
+        console.log("state",state)
       }
-
-
     };
     const searchOffer = (event) =>{
       console.log("event",event)
@@ -188,10 +185,10 @@ export default {
     //end methods
 
     //watch
-    watch(  () =>[state.quantity,state.cost,state.profit],
-        ([quantity,cost,profit] )=>{
+    watch(  () =>[state.cost,state.profit],
+        ([cost,profit] )=>{
       const calcProfit = cost+(cost*((profit)/100));
-          state.totalPrice = quantity*calcProfit;
+          state.totalPrice = calcProfit;
     });
 
     return{
@@ -199,13 +196,12 @@ export default {
       definition,
       filteredOffers,
       filteredCompany,
-      offerModel,
       unit,
       items,
+      optionsItem,
       openModal,
       addOfferData,
       searchOffer,
-      resetForm,
       v$,
       state,
       submitted

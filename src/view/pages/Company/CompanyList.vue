@@ -366,7 +366,7 @@
 <script>
 import { ref, onMounted } from 'vue';
 import {FilterMatchMode,FilterOperator} from 'primevue/api';
-import CustomerService from './CustomerService';
+import CustomerService from "./CustomerService";
 import { useToast } from 'primevue/usetoast';
 import ProductService from './productService';
 import { email, required } from "@vuelidate/validators";

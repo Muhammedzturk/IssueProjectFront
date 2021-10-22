@@ -137,11 +137,8 @@ export default {
       console.log("v$ top",v$)
       v$.value.$validate();
 
-    console.log("errorcheck",errorCheck)
-    console.log("v$.value.$error",v$.value.$error)
-    console.log("v$.value.$validate();",v$.value.$validate())
-
-    console.log("props.check",props.check)
+      console.log("errorcheck",errorCheck)
+      console.log("props.check",props.check)
 
 
         //watch
