@@ -1,11 +1,14 @@
+
 <template>
-    <base-card>
+  <base-card>
       <div class="grid">
         <Button @click="gittim">Apiye git bakalım!</Button>
       </div>
     </base-card>
 
 </template>
+
+
 
 <script>
 
@@ -33,4 +36,5 @@ methods:{
 }
 
 }
+
 </script>
