@@ -7,9 +7,9 @@
   <!-- DatatTable üst kısımdaki butonlar ve filtreleme inputu -->
   <template #header>
     <div class="p-d-flex p-jc-between">
-      <Button label=" Yeni Firma Oluştur" icon="pi pi-plus" class="p-button-success mr-2" @click="openNew" />
-      <Button label="Tüm Firmaları Sil" icon="pi pi-trash" class="p-button-danger mr-2" @click="confirmDeleteSelected" />
-      <Button type="button" icon="pi pi-filter-slash" label="Filtreleri Temizle" class="p-button-mr-2" @click="clearFilter1()"/>
+      <Button label=" Yeni Firma Oluştur" icon="pi pi-plus" class="p-button-success mr-2" @click="openNew" style="border-radius: 0.5rem" />
+      <Button label="Tüm Firmaları Sil" icon="pi pi-trash" class="p-button-danger mr-2" @click="confirmDeleteSelected" style="border-radius: 0.5rem" />
+      <Button type="button" icon="pi pi-filter-slash" label="Filtreleri Temizle" class="p-button-mr-2" @click="clearFilter1()" style="border-radius: 0.5rem"/>
       <span class="p-input-icon-left">
         <i class="pi pi-search col-offset-8"  />
         <InputText class="col-offset-8" v-model="filters1['global'].value" placeholder="Genel arama" />
@@ -72,7 +72,7 @@
   <!-- Firma ilgili gösterme butonu -->
   <Column :exportable="false" style="min-width:8rem" header="Firma İlgilisi">
     <template #body="slotProps">
-      <Button type="button" label="Göster" icon="pi pi-users" class=" p-button-info"  @click="showContactTable(slotProps.data)" />
+      <Button type="button" label="Görüntüle" icon="pi pi-users" class=" p-button-info p-button-outlined"  @click="showContactTable(slotProps.data)" style="border-radius: 0.5rem"/>
     </template>
   </Column>
   <!-- Firma ilgili gösterme butonu bitişi -->
@@ -133,13 +133,13 @@
     <template #header>
       <div class="grid">
         <div class="col-3" >
-          <Button type="button" icon="pi pi-user-plus" label="Firma İlgilisi Oluştur" class="p-button-success mr-2"  @click="openNewContact"/>
+          <Button type="button" icon="pi pi-user-plus" label="Firma İlgilisi Oluştur" class="p-button-success mr-2"  @click="openNewContact" style="border-radius: 0.5rem"/>
         </div>
       <div class="col-3">
-        <Button label="Tüm İlgilileri Sil" icon="pi pi-trash" class="p-button-danger mr-2" @click="deleteContacts" />
+        <Button label="Tüm İlgilileri Sil" icon="pi pi-trash" class="p-button-danger mr-2" @click="deleteContacts" style="border-radius: 0.5rem" />
       </div>
         <div class="col-3">
-          <Button type="button" icon="pi pi-filter-slash" label="Filtreleri Temizle" class="p-button-mr-2" @click="clearFilter2()"/>
+          <Button type="button" icon="pi pi-filter-slash" label="Filtreleri Temizle" class="p-button-mr-2" @click="clearFilter2()" style="border-radius: 0.5rem"/>
         </div>
         <div class="col-3">
       <span class="p-input-icon-left">
@@ -259,11 +259,6 @@
         <InputMask mask="(999) 999-9999" id="faxNumber" v-model="product.faxNumber" required="true" autofocus :class="{'p-invalid': submitted && !product.faxNumber}" />
     </div>
 
-    <div class="p-field">
-      <label for="companyContact">Firma İlgilisi*</label>
-      <InputText id="companyContact" v-model="product.companyContact" required="true" autofocus :class="{'p-invalid': submitted && !product.companyContact}" />
-      <small class="p-error" v-if="submitted && !product.companyContact">Firma İlgilisi Boş Bırakılamaz.</small>
-    </div>
     <template #footer>
       <Button label="İptal" icon="pi pi-times" class="p-button-text" @click="hideDialog"/>
       <Button label="Kaydet" icon="pi pi-check" class="p-button-text" @click="saveProduct" />
@@ -300,11 +295,6 @@
       <InputMask mask="(999) 999-9999" id="faxNumber" v-model="product.faxNumber" required="true" autofocus :class="{'p-invalid': submitted && !product.faxNumber}" />
     </div>
 
-    <div class="p-field">
-      <label for="companyContact">Firma İlgilisi*</label>
-      <InputText id="companyContact" v-model="product.companyContact" required="true" autofocus :class="{'p-invalid': submitted && !product.companyContact}" />
-      <small class="p-error" v-if="submitted && !product.companyContact">Firma İlgilisi Boş Bırakılamaz.</small>
-    </div>
     <template #footer>
       <Button label="İptal" icon="pi pi-times" class="p-button-text" @click="hideDialog"/>
       <Button label="Güncelle" icon="pi pi-check" class="p-button-text" @click="saveProduct" />
@@ -411,6 +401,7 @@ export default {
     const sended = ref(false);
     const rules = {
       email: { required, email },
+
     }
     const openNew = () => {
       product.value = {};

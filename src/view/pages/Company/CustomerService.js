@@ -8,5 +8,9 @@ export default class CustomerService {
         return fetch('/data/company-contacts.json').then(res => res.json())
             .then(d => d.data);
     }
+    getCustomersXXLarge() {
+        return fetch('/data/user-table.json').then(res => res.json())
+            .then(d => d.data);
+    }
 
 }
