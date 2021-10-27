@@ -20,6 +20,7 @@ import InputNumber from 'primevue/inputnumber';
 import InputMask from 'primevue/inputmask';
 import {PrimeIcons} from 'primevue/api';
 import Toast from 'primevue/toast';
+import Password from 'primevue/password';
 
 export const prime = (app) => {
 
@@ -45,5 +46,7 @@ export const prime = (app) => {
     app.component('InputMask',InputMask);
     app.component('PrimeIcons',PrimeIcons);
     app.component('Toast',Toast);
+    app.component('Password',Password);
+
 
 }

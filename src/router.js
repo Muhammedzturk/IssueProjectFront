@@ -2,7 +2,6 @@ import { createRouter, createWebHashHistory } from 'vue-router';
 import Dashboard from './view/Dashboard.vue';
 import OfferCreate from "./view/pages/Offer/OfferCreate";
 import OffersList from "./view/pages/Offer/OffersList";
-import CompanyCreate from "./view/pages/Company/CompanyCreate";
 import CompanyList from "./view/pages/Company/CompanyList";
 import Users from "./view/pages/Users/Users";
 
@@ -12,10 +11,7 @@ const routes = [
         name: 'dashboard',
         component: Dashboard,
     },
-    {
-        path: '/companyCreate',
-        name: 'companyCreate',component: CompanyCreate,
-    },
+
     {
         path: '/companyList',
         name: 'companyList',component: CompanyList,

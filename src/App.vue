@@ -60,10 +60,7 @@ export default {
                         {
                             label: 'Firma Bilgileri', icon: 'pi pi-fw pi-info-circle',
                             items: [
-                                {
-                                    label: 'Firma Oluştur', icon: 'pi pi-fw pi-plus', to:'/companyCreate',
 
-                                },
                               {
                                 label: 'Firma Listesi', icon: 'pi pi-fw pi-list', to:'/companyList',
 
