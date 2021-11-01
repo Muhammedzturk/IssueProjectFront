@@ -1,5 +1,5 @@
 <template>
-  <Button class="p-button p-button-help mr-1" icon="pi pi-pencil" @click="updateModal"/>
+  <Button class="p-button p-button-warning mr-1" icon="pi pi-pencil" @click="updateModal"/>
   <Button class="p-button p-button-danger" icon="pi pi-trash" @click="$emit('deleteOffer',offer.id)"/>
     <Dialog header="Teklif Güncelleme" v-model:visible="displayModal" :style="{width: '40vw' }" :modal="true">
       <div   style="padding: 1rem 1rem">

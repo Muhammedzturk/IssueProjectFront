@@ -7,7 +7,7 @@
             v-model="state.selectedCompany"
             :suggestions="filteredCompany"
             @complete="searchOffer($event)"
-            field="label"
+            field="companyName"
             :dropdown="true"
             placeholder="Firma ismini yazınız."
         />
@@ -20,11 +20,8 @@
              Lütfen Firma Seçiniz.
             </span>
       </div>
-
-
-
       <div class="col-4">
-        <Dropdown v-model="state.selectedAccount" :options="items.values" option-value="value" optionLabel="label" placeholder="Firma İlgili Seç" />
+        <Dropdown v-model="state.selectedAccount" :options="itemsContact" option-value="firstName" optionLabel="firstName" placeholder="Firma İlgili Seç" />
         <span class="p-error" v-if="v$.selectedAccount.$error && errorCheck">
              Seçili Firmaya Ait Bir İlgili Seçiniz.
             </span>
@@ -32,11 +29,9 @@
     </div>
     <div class="grid formgrid">
       <div class="col-4 mb-4 ">
-        <label class=" mt-2">Teklif Numarası: </label>
-              <span class="p-float-label">
-              <InputText id="offerPrefix" class="p-inputtext-sm"  type="text" v-model="state.offerNumber" disabled="true"></InputText>
-                <label for="offerPrefix">Ön Ek/Teklif No/Rev. No</label>
-              </span>
+        <label class=" mt-2">Ön Ek/Teklif No/Rev. No: </label>
+              <InputText id="offerPrefix" class="p-inputtext"  type="text" v-model="state.offerNumber" disabled="true" ></InputText>
+
         <span class="p-error" v-if="v$.offerNumber.$error && errorCheck">
              Teklif Numarası Boş Olamaz.
             </span>
@@ -85,14 +80,21 @@
 </template>
 
 <script>
-import {ref,watch,reactive,computed } from 'vue';
-import router from "../../router";
+import {ref, watch, reactive, computed, onMounted} from 'vue';
+import router from "../../../router";
 import { useVuelidate } from "@vuelidate/core";
 import {  required } from "@vuelidate/validators";
+import CompanyService from "../../../service/company.service";
+import CompanyContactService from "../../../service/companyContact.service";
 export default {
-  emits: ['profit-data' ],
+  emits: ['profit-data','offer-top-data' ],
   props:['check'],
   setup(props,{ emit }){
+    onMounted(async() => {
+      await CompanyService.getCompanyList().then(r =>{
+        companyList.value= r.payload
+      })
+    });
     const unit = ref([
       {label: 'TL', value: 'TL'},
       {label: 'Euro', value: 'EURO'},
@@ -107,6 +109,9 @@ export default {
     const filteredCompany=ref(null);
     const errorCheck=ref(computed(() => props.check));
     const profit=ref(null);
+    const companyList=ref(null);
+    const getIdData=ref(null)
+    const itemsContact=ref(null)
     const state = reactive({
       offerValidityDate:null,
       //offerPrefix:null,
@@ -136,16 +141,22 @@ export default {
       const v$ = useVuelidate(rules, state);
       console.log("v$ top",v$)
       v$.value.$validate();
-
+      if(!v$.value.$error){
+        emit("offer-top-data",state)
+      }
       console.log("errorcheck",errorCheck)
       console.log("props.check",props.check)
 
-
         //watch
-        watch(() => state.selectedCompany,(value) =>{
-          console.log("value",value)
-          const selectValue = items.value.filter( f => f.label == value.label)
-          console.log("selectValue",selectValue)
+        watch( () => state.selectedCompany,(company) =>{
+          console.log("company", company)
+          if(company.id>0){
+            CompanyContactService.getCompanyContact(company.id)
+                .then(response => {
+                  itemsContact.value = response.payload
+                  state.offerNumber = company.offerPrefix +"/"+ company.offerNumber
+                })
+          }
         });
 
         watch(() => [state.profit,state.selectedCurrency],([value,currency]) =>{
@@ -176,14 +187,14 @@ export default {
           router.push('/companyCreate')
         };
         const searchOffer = (event) =>{
-          console.log("event",event)
           setTimeout(() => {
             if (!event.query.trim().length) {
-              filteredCompany.value = [...items.value];
+              filteredCompany.value = [...companyList.value];
+              console.log("filteredCompany.value1",filteredCompany.value)
             }
             else {
-              filteredCompany.value = items.value.filter((c) => {
-                return c.label.toLowerCase().startsWith(event.query.toLowerCase());
+              filteredCompany.value = companyList.value.filter((c) => {
+                return c.companyName.toLowerCase().startsWith(event.query.toLowerCase());
               });
             }
           },50)
@@ -199,6 +210,9 @@ export default {
           unit,
           profit,
           v$,
+          getIdData,
+          itemsContact,
+          companyList,
           addDays,
           companyPage,
           searchOffer

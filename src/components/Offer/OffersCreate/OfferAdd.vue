@@ -64,7 +64,7 @@
         </TabPanel>
       </TabView>
       <offer-modal-form  @dialog-data="CalcPrice" :profitTop="profitTop" @error-info="errorInfo">
-        <Button label="Kaydet" class="p-button-help" @click="save"/>
+        <Button label="Kaydet" class="p-button-success" @click="save"/>
       </offer-modal-form>
     </div>
 
@@ -74,7 +74,7 @@
 <script>
 import {ref, onMounted, computed, reactive} from "vue";
 import { useToast } from 'primevue/usetoast';
-import ProductService from "../../service/ProductService";
+import ProductService from "../../../service/ProductService";
 import OfferModalForm from "./OfferModalForm";
 import OfferUpdateForm from "./OfferUpdateForm";
 import {required} from "@vuelidate/validators";
@@ -121,14 +121,19 @@ export default {
     //methods
     const save = () => {
       emit("error-check",true)
+      if(v$.value.$error){
       if(v$.value.commercialTerms.$error){
         active.value=1
+        return;
       }else if (v$.value.deliveryTime.$error){
         active.value=2
+        return;
       }else if (v$.value.offerDescription.$error){
         active.value=3
+        return;
       }else{
         active.value=0
+      }
       }
     }
     const deleteOffer = (deleteId) => {
@@ -143,10 +148,7 @@ export default {
       console.log("offers.valuesss",offers.value)
       //let findValue = offers.value.filter(f => f.id == data.id);
       let index = findIndexById(data.id)
-      console.log("index",index)
       offers.value[index] = data;
-      console.log("dataaaa",data)
-      console.log("offers.value[index]",offers.value[index])
     }
     const findIndexById = (id) => {
       let index = -1;

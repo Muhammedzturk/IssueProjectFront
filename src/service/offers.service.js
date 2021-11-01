@@ -1,14 +1,14 @@
 import axios from "axios";
-import {parse} from "./responseErrorParser.service";
-
 
 const OfferService ={
 
-    offersGetAll(){
-        return axios.get('/Offers').then(r=>{
+   async  getListOffer(){
+        return await axios.get('/api/offers/GetListOffer').then(r=>{
+            console.log("r.data",r.data)
             return r.data
+
         }).catch(e =>{
-            parse(e);
+            console.log(e)
         })
     },
     OfferGetById(value){
@@ -16,7 +16,7 @@ const OfferService ={
             .then(r =>{
                 return r.data
             }).catch(e=>{
-                parse(e);
+                console.log(e)
             })
     },
     offerPost(model){
@@ -24,7 +24,7 @@ const OfferService ={
             .then(r=>{
                 return r.data
             }).catch(e=>{
-                parse(e);
+                console.log(e)
             })
     },
     offerPut(value){
@@ -32,15 +32,15 @@ const OfferService ={
             .then(r=>{
                 return r.data
             }).catch(e =>{
-                parse(e);
+                console.log(e)
             })
     },
-    offerDelete(ID){
-        return axios.delete(`Offers/${ID}`)
+    deleteOffer(id){
+        return axios.delete(`/api/offers/DeleteOffer/${id}`)
             .then(r=>{
                 return r.data
             }).catch(e=>{
-                parse(e);
+                console.log(e)
             })
     }
 };

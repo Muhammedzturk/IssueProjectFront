@@ -1,14 +1,12 @@
 import axios from "axios";
 import {parse} from "./responseErrorParser.service";
-
-
 const CompanyService ={
 
-    companiesGet(){
-        return axios.get('/Company').then(r=>{
+    getCompanyList(){
+        return axios.get('api/company/GetCompanyList').then(r=>{
             return r.data
         }).catch(e =>{
-            parse(e);
+            console.log(e)
         })
     },
     companiesGetById(value){

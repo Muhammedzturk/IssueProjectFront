@@ -3,7 +3,7 @@ import axios from "axios";
 
 const ApiService = {
     init(){
-        axios.defaults.baseURL ="http://localhost:44357";
+        axios.defaults.baseURL ="https://10.0.0.204:5001";
         console.log("burası",axios.defaults.baseURL)
     },
 
@@ -15,9 +15,7 @@ const ApiService = {
     },
 
 
-
 //Burası kullanılmayacak şimdilik...
-
 
 
     query(resource, params) {

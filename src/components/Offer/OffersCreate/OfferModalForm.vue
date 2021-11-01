@@ -67,6 +67,9 @@
           <div style="display: grid" class="p-fluid col-6  mt-2">
             <label  for="selectedOption">Seçenek</label>
             <Dropdown v-model="state.selectedOption" :options="optionsItem" optionLabel="label" optionValue="value" id="selectedOption" placeholder="Seçenek No" />
+            <span class="p-error" v-if="v$.selectedOption.$error">
+             Seçenek Seçiniz.
+            </span>
           </div>
         </div>
       </div>

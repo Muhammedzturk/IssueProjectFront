@@ -1,3 +1,4 @@
+
 <template>
   <div class="card">
     <h5>Kullanıcı Listesi</h5>
@@ -11,11 +12,11 @@
           <div class="p-d-flex p-jc-between">
             <!-- kullanıcı oluşturma componenti -->
 
-          <create-user
+            <create-user
 
-              @send-data-create-user="sendDataCreateUser"
+                @send-data-create-user="sendDataCreateUser"
 
-          ></create-user>
+            ></create-user>
 
             <Button type="button" icon="pi pi-filter-slash" label="Filtreleri Temizle" class="p-button-mr-2 p-button-outlined" @click="clearFilter3()" style="border-radius: 0.5rem"/>
             <span class="p-input-icon-left">
@@ -66,26 +67,17 @@
         <!-- kullanıcı tablosunu güncelle ve sil butonlarının olduğu sütun -->
         <Column :exportable="false" style="min-width:8rem" header="Güncelle ve Sil">
           <template #body="slotProps">
-
             <update-user
-
-             @send-data-update-user="sendDataUpdateUser"
-             :data="slotProps.data"
-             @send-data-delete-user="sendDataDeleteUser"
-
+                @send-data-update-user="sendDataUpdateUser"
+                :data="slotProps.data"
+                @send-data-delete-user="sendDataDeleteUser"
             ></update-user>
-
-
           </template>
         </Column>
       </DataTable>
     </div>
-
-
-
-
   </div>
-    </template>
+</template>
 
 <script>
 import {ref, onMounted} from 'vue';
@@ -94,8 +86,6 @@ import {FilterMatchMode,FilterOperator} from 'primevue/api';
 import { useToast } from 'primevue/usetoast';
 import CreateUser from "../../../components/Users/CreateUser";
 import UpdateUser from "../../../components/Users/UpdateUser";
-
-
 
 export default {
   components: {UpdateUser, CreateUser},
@@ -123,17 +113,17 @@ export default {
     }
     //yeni kullanıcı oluşturma güncelleştirme işlemi
 
-      const sendDataCreateUser = (data) => {
-        console.log("dataaa", data)
-        users.value.push({
-          userUserName: data.userUserName,
-          registrationNumber: data.registrationNumber,
-          userPhoneNumber: data.userPhoneNumber,
-          userEmail: data.userEmail,
-          role: data.role,
+    const sendDataCreateUser = (data) => {
+      console.log("dataaa", data)
+      users.value.push({
+        userUserName: data.userUserName,
+        registrationNumber: data.registrationNumber,
+        userPhoneNumber: data.userPhoneNumber,
+        userEmail: data.userEmail,
+        role: data.role,
 
-        })
-      };
+      })
+    };
     const sendDataUpdateUser = (data) =>{
       console.log("dataaa",data)
       let index = findIndexById(data.id)
@@ -160,68 +150,68 @@ export default {
       return index;
     };
 
-      const createId = () => {
-        let id = '';
-        var chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-        for (var i = 0; i < 5; i++) {
-          id += chars.charAt(Math.floor(Math.random() * chars.length));
-        }
-        return id;
+    const createId = () => {
+      let id = '';
+      var chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+      for (var i = 0; i < 5; i++) {
+        id += chars.charAt(Math.floor(Math.random() * chars.length));
       }
-      //filtreleme işlemi
-      const filters3 = ref({
+      return id;
+    }
+    //filtreleme işlemi
+    const filters3 = ref({
+      'global': {value: null, matchMode: FilterMatchMode.CONTAINS},
+      'userUserName': {value: null, matchMode: FilterMatchMode.CONTAINS},
+      'registrationNumber': {value: null, matchMode: FilterMatchMode.STARTS_WITH},
+      'userPhoneNumber': {value: null, matchMode: FilterMatchMode.STARTS_WITH},
+      'userEmail': {value: null, matchMode: FilterMatchMode.STARTS_WITH},
+      'role': {value: null, matchMode: FilterMatchMode.STARTS_WITH}
+    });
+    //filtreleri temizleme işlemi
+    const clearFilter3 = () => {
+      initFilters3();
+
+    };
+    const initFilters3 = () => {
+      filters3.value = {
         'global': {value: null, matchMode: FilterMatchMode.CONTAINS},
         'userUserName': {value: null, matchMode: FilterMatchMode.CONTAINS},
         'registrationNumber': {value: null, matchMode: FilterMatchMode.STARTS_WITH},
         'userPhoneNumber': {value: null, matchMode: FilterMatchMode.STARTS_WITH},
         'userEmail': {value: null, matchMode: FilterMatchMode.STARTS_WITH},
         'role': {value: null, matchMode: FilterMatchMode.STARTS_WITH}
-      });
-      //filtreleri temizleme işlemi
-      const clearFilter3 = () => {
-        initFilters3();
-
-      };
-      const initFilters3 = () => {
-        filters3.value = {
-          'global': {value: null, matchMode: FilterMatchMode.CONTAINS},
-          'userUserName': {value: null, matchMode: FilterMatchMode.CONTAINS},
-          'registrationNumber': {value: null, matchMode: FilterMatchMode.STARTS_WITH},
-          'userPhoneNumber': {value: null, matchMode: FilterMatchMode.STARTS_WITH},
-          'userEmail': {value: null, matchMode: FilterMatchMode.STARTS_WITH},
-          'role': {value: null, matchMode: FilterMatchMode.STARTS_WITH}
-        }
-      };
-      //kullanıcı güncelleme dialogu açma click i
-
-      //tüm kullanıcıları silme butonu click i
-
-
-
-
-      const users = ref(null);
-      return {
-        added,
-        user,
-        users,
-        createId,
-        filters3,
-        clearFilter3,
-        sendDataCreateUser,
-        initFilters3,
-        userDialogUpdate,
-        hideDialog,
-        selectedUsers,
-        FilterOperator,
-        FilterMatchMode,
-        singleDeleteUserDialog,
-        toast,
-        sendDataUpdateUser,
-        sendDataDeleteUser,
-        findIndexById
       }
+    };
+    //kullanıcı güncelleme dialogu açma click i
+
+    //tüm kullanıcıları silme butonu click i
+
+
+
+
+    const users = ref(null);
+    return {
+      added,
+      user,
+      users,
+      createId,
+      filters3,
+      clearFilter3,
+      sendDataCreateUser,
+      initFilters3,
+      userDialogUpdate,
+      hideDialog,
+      selectedUsers,
+      FilterOperator,
+      FilterMatchMode,
+      singleDeleteUserDialog,
+      toast,
+      sendDataUpdateUser,
+      sendDataDeleteUser,
+      findIndexById
     }
   }
+}
 
 </script>
 <style lang="scss" scoped>

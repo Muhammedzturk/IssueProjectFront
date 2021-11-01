@@ -3,176 +3,129 @@
    "data":[
       {
          "id": 5,
-         "offerPrefix":"jms",
+         "offerDefinition":"jms",
          "companyName":"James Butt",
-         "address": "Kayserii",
-         "phoneNumber":"0000000",
-         "faxNumber":"20150913",
-         "companyContact":"celal"
-
-
+         "offerNumber": "Kayserii",
+         "offerDate":"0000000",
+         "offerValidityDate":"20150913",
+         "status":"olumsuz"
       },
       {
          "id": 3,
-         "offerPrefix": "jms",
+         "offerDefinition": "jms",
          "companyName":"sadasd",
-         "address": "Muş",
-         "phoneNumber":"00123100000",
-         "faxNumber":"20150998013",
-         "companyContact":"celal"
-
-
+         "offerNumber": "Muş",
+         "offerDate":"00123100000",
+         "offerValidityDate":"20150998013",
+         "status":"olumlu"
       },
       {
          "id": 6,
-         "offerPrefix": "jms",
+         "offerDefinition": "jms",
          "companyName":"jhkkhkhkt",
-         "address": "Malatya",
-         "phoneNumber":"0004325430000",
-         "faxNumber":"2015078913",
-         "companyContact":"celal"
+         "offerNumber": "Malatya",
+         "offerDate":"0004325430000",
+         "offerValidityDate":"2015078913",
+         "status":"bekleniyor"
 
       },
       {
          "id": 8,
-         "offerPrefix": "jms",
+         "offerDefinition": "jms",
          "companyName":"James Butt",
-         "address": "Kayseri",
-         "phoneNumber":"0000000",
-         "faxNumber":"20150913",
-         "companyContact":"celal"
+         "offerNumber": "Kayseri",
+         "offerDate":"0000000",
+         "offerValidityDate":"20150913",
+         "status":"olumsuz"
 
 
       },
       {
          "id": 1,
-         "offerPrefix": "jms",
+         "offerDefinition": "jms",
          "companyName":"sadasd",
-         "address": "Muş",
-         "phoneNumber":"00123100000",
-         "faxNumber":"20150998013",
-         "companyContact":"celal"
+         "offerNumber": "Muş",
+         "offerDate":"00123100000",
+         "offerValidityDate":"20150998013",
+         "status":"olumsuz"
 
 
       },
       {
 
          "id": 2,
-         "offerPrefix": "jms",
+         "offerDefinition": "jms",
          "companyName":"jhkkhkhkt",
-         "address": "Malatya",
-         "phoneNumber":"0004325430000",
-         "faxNumber":"2015078913",
-         "companyContact":"celal"
+         "offerNumber": "Malatya",
+         "offerDate":"0004325430000",
+         "offerValidityDate":"2015078913",
+         "status":"olumsuz"
 
       },
       {
          "id": 7,
-         "offerPrefix": "jms",
+         "offerDefinition": "jms",
          "companyName":"James Butt",
-         "address": "Kayseri",
-         "phoneNumber":"0000000",
-         "faxNumber":"20150913",
-         "companyContact":"celal"
+         "offerNumber": "Kayseri",
+         "offerDate":"0000000",
+         "offerValidityDate":"20150913",
+         "status":"olumsuz"
 
 
       },
       {
          "id": 9,
-         "offerPrefix": "jms",
+         "offerDefinition": "jms",
          "companyName":"sadasd",
-         "address": "Muş",
-         "phoneNumber":"00123100000",
-         "faxNumber":"20150998013",
-         "companyContact":"celal"
+         "offerNumber": "Muş",
+         "offerDate":"00123100000",
+         "offerValidityDate":"20150998013",
+         "status":"olumsuz"
 
 
       },
       {
          "id": 4,
-         "offerPrefix": "jms",
+         "offerDefinition": "jms",
          "companyName":"jhkkhkhkt",
-         "address": "Malatya",
-         "phoneNumber":"0004325430000",
-         "faxNumber":"2015078913",
-         "companyContact":"celal"
+         "offerNumber": "Malatya",
+         "offerDate":"0004325430000",
+         "offerValidityDate":"2015078913",
+         "status":"olumsuz"
 
       },
       {
          "id": 12,
-         "offerPrefix": "jms",
+         "offerDefinition": "jms",
          "companyName":"James Butt",
-         "address": "Kayseri",
-         "phoneNumber":"0000000",
-         "faxNumber":"20150913",
-         "companyContact":"celal"
+         "offerNumber": "Kayseri",
+         "offerDate":"0000000",
+         "offerValidityDate":"20150913",
+         "status":"olumsuz"
 
 
       },
       {
          "id": 22,
-         "offerPrefix": "jms",
+         "offerDefinition": "jms",
          "companyName":"sadasd",
-         "address": "Muş",
-         "phoneNumber":"00123100000",
-         "faxNumber":"20150998013",
-         "companyContact":"celal"
+         "offerNumber": "Muş",
+         "offerDate":"00123100000",
+         "offerValidityDate":"20150998013",
+         "status":"olumsuz"
 
 
       },
       {
          "id": 32,
-         "offerPrefix": "jms",
+         "offerDefinition": "jms",
          "companyName":"jhkkhkhkt",
-         "address": "Malatya",
-         "phoneNumber":"0004325430000",
-         "faxNumber":"2015078913",
-         "companyContact":"celal"
-
-      },
-      {
-         "id": 52,
-         "offerPrefix": "jms",
-         "companyName":"James Butt",
-         "address": "Kayseri",
-         "phoneNumber":"0000000",
-         "faxNumber":"20150913",
-         "companyContact":"celal"
-
-
-      },
-      {
-
-         "id": 72,
-         "offerPrefix": "jms",
-         "companyName":"sadasd",
-         "address": "Muş",
-         "phoneNumber":"00123100000",
-         "faxNumber":"20150998013",
-         "companyContact":"celal"
-
-
-      },
-      {
-         "id": 212,
-         "offerPrefix": "jms",
-         "companyName":"jhkkhkhkt",
-         "address": "Malatya",
-         "phoneNumber":"0004325430000",
-         "faxNumber":"2015078913",
-         "companyContact":"celal"
-
-      },
-      {
-         "id": 92,
-         "offerPrefix": "jms",
-         "companyName":"James Butt",
-         "address": "Kayseri",
-         "phoneNumber":"0000000",
-         "faxNumber":"20150913",
-         "companyContact":"celal"
-
+         "offerNumber": "Malatya",
+         "offerDate":"0004325430000",
+         "offerValidityDate":"2015078913",
+         "status":"olumsuz"
 
       }
+
       ]
       }
