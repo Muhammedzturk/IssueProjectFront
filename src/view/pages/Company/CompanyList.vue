@@ -2,8 +2,10 @@
 <div class="card">
 <h5>Firma Listesi</h5>
     <div class="card"  style="height: calc(100vh - 143px)">
-<DataTable  :value="companies"  ref="dt"  v-model:selection="selectedCompanies"  selectionMode="single" dataKey="id" showGridlines responsiveLayout="scroll" :scrollable="true" scrollHeight="flex"
-           v-model:filters="filters1" filterDisplay="menu" class="p-datatable-companies"  :globalFilterFields="['offerPrefix','companyName','address','phoneNumber','faxNumber','companyContact']">
+<DataTable  :value="companies"  v-model:selection="selectedCompanies"  selectionMode="single" dataKey="id"
+            showGridlines responsiveLayout="scroll" :scrollable="true" scrollHeight="flex"
+           v-model:filters="filters1" filterDisplay="menu" class="p-datatable-companies"
+            :globalFilterFields="['offerPrefix','companyName','address','phoneNumber','faxNumber','companyContact']">
   <!-- DataTable üst kısımdaki butonlar ve filtreleme inputu -->
   <template #header>
     <div class="p-d-flex p-jc-between">
@@ -14,7 +16,8 @@
       >
       </create-company>
 
-      <Button type="button" icon="pi pi-filter-slash" label="Filtreleri Temizle" class="p-button-mr-2" @click="clearFilter1()" style="border-radius: 0.5rem"/>
+      <Button type="button" icon="pi pi-filter-slash" label="Filtreleri Temizle" class="p-button-mr-2  p-button-outlined"
+              @click="clearFilter1()" style="border-radius: 0.5rem"/>
       <span class="p-input-icon-left">
         <i class="pi pi-search col-offset-12" />
         <InputText class="col-offset-12" v-model="filters1['global'].value" placeholder="Genel arama" />
@@ -62,6 +65,7 @@
          <contact-list
          @send-data-contact-list="sendDataContactList"
          :companyName="slotProps.data.companyName"
+          :data="slotProps.data"
          ></contact-list>
 </template>
   </Column>
@@ -73,6 +77,7 @@
       <update-company
           @send-data-update="sendDataUpdate"
           :data="slotProps.data"
+          :companyName="slotProps.data.companyName"
           @send-data-delete="sendDataDelete"
 
       ></update-company>
@@ -91,22 +96,33 @@
 <script>
 import {onMounted, ref} from 'vue';
 import {FilterMatchMode,FilterOperator} from 'primevue/api';
-import CustomerService from "./CustomerService";
 import { useToast } from 'primevue/usetoast';
 import { email, required } from "@vuelidate/validators";
 import CreateCompany from "../../../components/Company/CreateCompany";
 import UpdateCompany from "../../../components/Company/UpdateCompany";
 import ContactList from "../Contacts/ContactList";
+import CompanyService from "../../../service/company.service";
+
 
 export default {
   components: {ContactList, UpdateCompany, CreateCompany},
   setup() {
-    onMounted(() => {
-      customerService.value.getCustomersLarge().then(data => {
-        companies.value = data;
-        companies.value.forEach(companies => companies.date = new Date(companies.date));
-      });
-    })
+    onMounted(async() => {
+      await CompanyService.getCompanyList().then(r =>{
+        companies.value= r.payload.map((data,index) =>{
+          return {
+            index:index,
+            id:data.id,
+            offerPrefix:data.offerPrefix,
+            companyName:data.companyName,
+            address:data.address,
+            phoneNumber:data.phoneNumber,
+            faxNumber:data.faxNumber,
+          }
+        })
+      })
+
+    });
     const toast = useToast();
     const companyDialogUpdate = ref(false);
     const companyDialog = ref(false);
@@ -119,15 +135,14 @@ export default {
     }
 //company tablosunda firma bilgisi güncelleme işlemi
     const sendDataUpdate = (data) => {
-      console.log("dataaa",data)
       let index = findIndexById(data.id)
-      console.log("index",index)
       companies.value[index] = data;
     };
 
 // yeni firma oluşturma işlemi
     const sendData = (data) => {
-      console.log("dataaa",data)
+      data.offerNumber = "1000"
+    CompanyService.companiesPost(data).then()
       companies.value.push({
         offerPrefix:data.offerPrefix,
         companyName:data.companyName,
@@ -137,22 +152,19 @@ export default {
 
       })
     };
-    const sendDataContactList = (data) => {
-      console.log("dataaa",data)
+    const sendDataContactList = () =>{
 
-    };
+    }
 
     //tek satırdaki firma silme işlemi
     const sendDataDelete = (deleteId) => {
-      console.log("dataaa",deleteId)
-      let index = companies.value.findIndex(i =>{
-        return i.id ==deleteId
-      });
+      let index = findIndexById(deleteId)
       companies.value.splice(index,1)
       toast.add({severity:'warn', summary: 'Firma Silindi.', life: 3000});
     };
 
 
+    //dialogları kapama işlemi
     const hideDialog = () => {
       companyDialogUpdate.value=false;
       submitted.value = false;
@@ -172,27 +184,14 @@ export default {
       return index;
     };
 
-    //satır seçme işlemi
-    const onRowSelect = (event) => {
-      toast.add({severity: 'info', summary: 'Product Selected', detail: 'Name: ' + event.data.name, life: 3000});
-    };
-    //satır seçme işlemi kaldırma
-    const onRowUnselect = (event) => {
-      toast.add({severity: 'warn', summary: 'Product Unselected', detail: 'Name: ' + event.data.name, life: 3000});
-    };
+
 
     const companies = ref(null);
     const companyContacts = ref(null);
-    const customerService = ref(new CustomerService());
     //firma tablosu filtreleme işlemi
     const filters1 = ref({
       'global': {value: null, matchMode: FilterMatchMode.CONTAINS},
-      'offerPrefix': {operator: FilterOperator.AND, constraints: [{value: null, matchMode: FilterMatchMode.STARTS_WITH}]},
-      'companyName': {operator: FilterOperator.AND, constraints: [{value: null, matchMode: FilterMatchMode.STARTS_WITH}]},
-      'address': {operator: FilterOperator.AND, constraints: [{value: null, matchMode: FilterMatchMode.STARTS_WITH}]},
-      'phoneNumber': {operator: FilterOperator.AND, constraints: [{value: null, matchMode: FilterMatchMode.STARTS_WITH}]},
-      'faxNumber': {operator: FilterOperator.AND, constraints: [{value: null, matchMode: FilterMatchMode.STARTS_WITH}]},
-      'companyContact': {operator: FilterOperator.AND, constraints: [{value: null, matchMode: FilterMatchMode.STARTS_WITH}]},
+
     });
 
     //firma tablosu filtreleri temizle butonu işlemi
@@ -205,18 +204,13 @@ export default {
     const initFilters1 = () => {
       filters1.value = {
         'global': {value: null, matchMode: FilterMatchMode.CONTAINS},
-        'companyName': {operator: FilterOperator.AND, constraints: [{value: null, matchMode: FilterMatchMode.STARTS_WITH}]},
-        'offerPrefix': {operator: FilterOperator.AND, constraints: [{value: null, matchMode: FilterMatchMode.STARTS_WITH}]},
-        'address': {operator: FilterOperator.AND, constraints: [{value: null, matchMode: FilterMatchMode.STARTS_WITH}]},
-        'phoneNumber': {operator: FilterOperator.AND, constraints: [{value: null, matchMode: FilterMatchMode.STARTS_WITH}]},
-        'faxNumber': {operator: FilterOperator.AND, constraints: [{value: null, matchMode: FilterMatchMode.STARTS_WITH}]},
-        'companyContact': {operator: FilterOperator.AND, constraints: [{value: null, matchMode: FilterMatchMode.STARTS_WITH}]},
+
       }
     };
 
     return {clearFilter1, initFilters1, companies, filters1,FilterMatchMode,FilterOperator,
-     onRowSelect,onRowUnselect,companyDialogUpdate,selectedCompanies,submitted,hideDialog,rules,companyDialog,company,sendDataUpdate,
-      sendData,findIndexById,sendDataDelete,sendDataContactList,companyContacts,customerService
+     companyDialogUpdate,selectedCompanies,submitted,hideDialog,rules,companyDialog,company,sendDataUpdate,
+      sendData,findIndexById,sendDataDelete,sendDataContactList,companyContacts
     }
   }
 }

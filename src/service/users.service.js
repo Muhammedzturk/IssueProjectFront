@@ -1,6 +1,6 @@
 import client from "./axios";
 
-export default {
+const UsersService = {
     getUserList(filterList, search) {
         let filters = filterList.map((filterItem) => {
             return filterItem.expression;
@@ -36,3 +36,4 @@ export default {
         return client().delete("/user/delete/" + userId);
     }
 };
+export default UsersService;

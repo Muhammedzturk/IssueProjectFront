@@ -1,33 +1,34 @@
 <template>
   <!-- yeni firma oluşturma işlemi dialogu -->
-  <Button label=" Yeni Firma Oluştur" icon="pi pi-plus" class="p-button-success mr-2" @click="openNewCompany" style="border-radius: 0.5rem" />
+  <Button label=" Yeni Firma Oluştur" icon="pi pi-plus" class="p-button-success mr-2  p-button-outlined" @click="openNewCompany"
+          style="border-radius: 0.5rem" />
   <Dialog v-model:visible="companyDialog" :style="{width: '450px'}" header="Listeye Firma Ekle" :modal="true" class="p-fluid">
 
     <div class="p-field">
       <label for="offerPrefix">Teklif Ön Ek*</label>
-      <InputText id="offerPrefix" v-model="state.offerPrefix" required="true" autofocus  />
+      <InputText id="offerPrefix" v-model="state.offerPrefix"  autofocus  />
       <small class="p-error" v-if="v$.offerPrefix.$error">Teklif Ön Ek Boş Bırakılamaz.</small>
     </div>
 
     <div class="p-field">
       <label for="companyName">Firma Adı*</label>
-      <InputText id="companyName" v-model="state.companyName" required="true" autofocus  />
+      <InputText id="companyName" v-model="state.companyName"  />
       <small class="p-error" v-if="v$.companyName.$error">Firma Adı Boş Bırakılamaz.</small>
     </div>
     <div class="p-field">
       <label for="address">Adres*</label>
-      <Textarea id="address" v-model="state.address" required="true" rows="3" cols="20" />
+      <Textarea id="address" v-model="state.address" rows="3" cols="20" />
       <small class="p-error" v-if="v$.address.$error">Adres Boş Bırakılamaz.</small>
     </div>
     <div class="p-field">
       <label for="phoneNumber" class="p-mb-3">Telefon*</label>
-      <InputMask mask="(999) 999-9999" id="phoneNumber" v-model="state.phoneNumber" required="true" autofocus  />
+      <InputMask mask="9999999999" id="phoneNumber" v-model="state.phoneNumber"   />
       <small class="p-error" v-if="v$.phoneNumber.$error">Telefon Boş Bırakılamaz.</small>
     </div>
 
     <div class="p-field">
       <label for="faxNumber" class="p-mb-3">Fax</label>
-      <InputMask mask="(999) 999-9999" id="faxNumber" v-model="state.faxNumber" required="true" autofocus  />
+      <InputMask mask="9999999999" id="faxNumber" v-model="state.faxNumber"   />
     </div>
 
     <template #footer>
@@ -93,6 +94,7 @@ export default {
     }
     //firma oluştur butonunun click i
     const openNewCompany = () => {
+      resetForm()
       v$.value.$reset();
       submitted.value = false;
       companyDialog.value = true;
