@@ -1,9 +1,11 @@
 <template>
 
-  <Button label=" Yeni Kullanıcı Oluştur" icon="pi pi-user-plus" class="p-button-success mr-2 p-button-outlined" @click="openNewUser" style="border-radius: 0.5rem" />
+  <Button label=" Yeni Kullanıcı Oluştur" icon="pi pi-user-plus" class="p-button-success mr-2 p-button-outlined"
+          @click="openNewUser" style="border-radius: 0.5rem" />
 
   <!--Yeni kullanıcı oluştur işlemi -->
-  <Dialog v-model:visible="newCreateUserDialog" :style="{width: '450px'}" header="Yeni Kullanıcı Oluştur" :modal="true" class="p-fluid">
+  <Dialog v-model:visible="newCreateUserDialog" :style="{width: '450px'}" header="Yeni Kullanıcı Oluştur"
+          :modal="true" class="p-fluid">
     <div class="card">
       <div class="p-field">
         <label for="userUserName">Ad Soyad*</label>
@@ -17,7 +19,7 @@
       </div>
       <div class="p-field">
         <label for="userPhoneNumber">Telefon*</label>
-        <InputMask mask="(999) 999-9999"  id="userPhoneNumber" v-model="state.userPhoneNumber" required="true" autofocus  />
+        <InputMask mask="9999999999"  id="userPhoneNumber" v-model="state.userPhoneNumber" required="true" autofocus  />
         <small class="p-error" v-if="v$.userPhoneNumber.$error">Telefon Boş Bırakılamaz.</small>
       </div>
       <div class="p-field">
@@ -72,6 +74,7 @@ export default {
       userPhoneNumber:'',
       userEmail:'',
       role:'',
+
     })
 
     const v$ = useVuelidate(rules, state);

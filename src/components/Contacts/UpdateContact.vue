@@ -39,7 +39,7 @@
   <Dialog v-model:visible="deleteContactDialog" :style="{width: '450px'}" header=" Firma İlgilisi Sil" :modal="true">
     <div class="confirmation-content">
       <i class="pi pi-exclamation-triangle mr-3 " style="font-size: 2rem" />
-      <span v-if="contact">{{contact.userName}} kişisini silmek istediğinizden emin misiniz<b></b>?</span>
+      <span v-if="contact">{{userName}} kişisini silmek istediğinizden emin misiniz<b></b>?</span>
     </div>
     <template #footer>
       <Button label="Hayır" icon="pi pi-times" class="p-button-text" @click="deleteContactDialog = false"/>
@@ -57,7 +57,7 @@ import {useVuelidate} from "@vuelidate/core";
 
 export default {
   emits:['send-data-update-contact','send-data-delete-contact'],
-  props:['data'],
+  props:['data','userName'],
   setup(props,{emit}){
     const contactDialogUpdate= ref(false);
     const deleteContactDialog= ref(false);
@@ -93,7 +93,7 @@ export default {
       v$.value.$validate();
       if(!v$.value.$error){
         emit("sendDataUpdateContact",state)
-        toast.add({severity: 'success', summary: 'Başarılı', detail: 'Firma Güncellendi', life: 3000});
+        toast.add({severity: 'success', summary: 'Başarılı', detail: 'Firma İlgilisi Güncellendi', life: 3000});
         contactDialogUpdate.value = false;
 
       }
@@ -106,8 +106,7 @@ export default {
     }
     //firma ilgili güncelleme butonu click i
     const editContact = () => {
-      console.log('contakta')
-      //company.value={...data}
+
       sended.value = false;
       contactDialogUpdate.value = true;
     };

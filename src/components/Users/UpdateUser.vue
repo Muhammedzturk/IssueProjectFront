@@ -1,5 +1,5 @@
 <template>
-  <Button icon="pi pi-pencil" class=" ml-auto mr-2 p-button-rounded p-button-success p-mr-2 p-button-outlined" @click="editUser()" />
+  <Button icon="pi pi-pencil" class=" ml-auto mr-2 p-button-rounded p-button-warning p-mr-2 p-button-outlined" @click="editUser()" />
   <!--kullanıcı güncelleme  işlemi -->
   <Dialog v-model:visible="userDialogUpdate" :style="{width: '450px'}" header="Kullanıcı Güncelle" :modal="true" class="p-fluid">
     <div class="card">
@@ -42,7 +42,7 @@
   <Dialog v-model:visible="singleDeleteUserDialog" :style="{width: '450px'}" header=" Kullanıcıyı Sil" :modal="true">
     <div class="confirmation-content">
       <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem" />
-      <span v-if="user">{{user.userUserName}} adlı kullanıcıyı silmek istediğinizden emin misiniz?</span>
+      <span v-if="user">{{userUserName}} adlı kullanıcıyı silmek istediğinizden emin misiniz?</span>
     </div>
     <template #footer>
       <Button label="Hayır" icon="pi pi-times" class="p-button-text" @click="singleDeleteUserDialog = false"/>
@@ -59,7 +59,7 @@ import {required} from "@vuelidate/validators";
 import {useVuelidate} from "@vuelidate/core";
 export default {
   emits:['send-data-update-user','send-data-delete-user'],
-  props:['data'],
+  props:['data','userUserName'],
   setup(props,{emit}){
 
     const toast = useToast();
@@ -96,7 +96,7 @@ export default {
       v$.value.$validate();
       if(!v$.value.$error){
         emit("sendDataUpdateUser",state)
-        toast.add({severity: 'success', summary: 'Başarılı', detail: 'Firma İlgilisi Güncellendi', life: 3000});
+        toast.add({severity: 'success', summary: 'Başarılı', detail: 'Kullanıcı Güncellendi', life: 3000});
         userDialogUpdate.value = false;
 
       }

@@ -18,7 +18,7 @@
     </div>
     <div class="p-field">
       <label for="contactPhoneNumber">Telefon*</label>
-      <InputMask mask="(999) 999-9999" id="contactPhoneNumber" v-model="state.contactPhoneNumber" required="true" autofocus  />
+      <InputMask mask="9999999999" id="contactPhoneNumber" v-model="state.contactPhoneNumber" required="true" autofocus  />
       <small class="p-error" v-if="v$.contactPhoneNumber.$error">Adres Boş Bırakılamaz.</small>
     </div>
 

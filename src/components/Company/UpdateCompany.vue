@@ -1,6 +1,6 @@
 <template>
   <!--  firma bilgisi güncelleme işlemi dialogu -->
-  <Button icon="pi pi-pencil" class=" ml-auto mr-2 p-button-rounded p-button-success p-mr-2" @click="editCompany()" />
+  <Button icon="pi pi-pencil" class=" ml-auto mr-2 p-button-rounded p-button-warning p-mr-2 p-button-outlined" @click="editCompany()" />
 
   <Dialog v-model:visible="companyDialogUpdate" :style="{width: '450px'}" header="Firma Güncelle" :modal="true" class="p-fluid">
 
@@ -41,11 +41,11 @@
 
   <!-- Tek satırdaki firmayı silme işlemi dialogu -->
 
-  <Button icon="pi pi-trash" class=" p-button-rounded p-button-danger" @click="singleDeleteCompany(data)" />
+  <Button icon="pi pi-trash" class=" p-button-rounded p-button-danger p-button-outlined" @click="singleDeleteCompany(data)" />
   <Dialog v-model:visible="singleDeleteCompanyDialog" :style="{width: '450px'}" header="Firma Sil" :modal="true">
     <div class="confirmation-content">
       <i class="pi pi-exclamation-triangle mr-3 " style="font-size: 2rem" />
-      <span v-if="company">{{company.companyName}} firmasını silmek istediğinizden emin misiniz<b></b>?</span>
+      <span v-if="company">{{companyName}} firmasını silmek istediğinizden emin misiniz<b></b>?</span>
     </div>
     <template #footer>
       <Button label="Hayır" icon="pi pi-times" class="p-button-text" @click="singleDeleteCompanyDialog = false"/>
@@ -62,7 +62,7 @@ import {required} from "@vuelidate/validators";
 import {useVuelidate} from "@vuelidate/core";
 export default {
   emits:['send-data-update','send-data-delete'],
-  props:['data'],
+  props:['data','companyName'],
   setup(props,{emit}){
     const companyDialogUpdate= ref(false);
     const singleDeleteCompanyDialog = ref(false);
@@ -71,7 +71,6 @@ export default {
     const toast = useToast();
     const submitted=ref(false);
 
-    console.log("company",props.data)
 
 //firma bilgilerinin inputlarının boş olup olmadığını kontrol etme işlemi
     const rules = computed(() => {
@@ -121,7 +120,6 @@ export default {
     };
     //tek satırdaki firmayı silme işlemi
     const deleteCompany = () => {
-      console.log('slmeye girdi')
       emit("sendDataDelete",state.id)
 
     };

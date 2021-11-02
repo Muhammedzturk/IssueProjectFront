@@ -17,12 +17,12 @@ const CompanyService ={
                 parse(e);
             })
     },
-    companiesPost(model){
-        return axios.post(`Company`, model)
+    companiesPost(data){
+        return axios.post(`api/company/AddCompany`, data)
             .then(r=>{
                 return r.data
             }).catch(e=>{
-                parse(e);
+                console.log(e)
             })
     },
     companiesPut(value){
