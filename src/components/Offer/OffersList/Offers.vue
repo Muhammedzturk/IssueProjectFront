@@ -112,6 +112,7 @@ export default {
     onMounted(async() => {
       await OfferService.getListOffer().then(r =>{
       offers.value= r.payload.map((data,index) =>{
+        console.log("data offer",data)
         return {
           index:index,
           id:data.id,
@@ -133,7 +134,7 @@ export default {
     const offers = ref(null);
     const offerDetailsInfo = ref(null);
     const statuses = ref([
-      'olumsuz', 'olumlu', 'bekleniyor',
+      'olumsuz', 'olumlu', 'beklemede',
     ]);
     const filters1 = ref({
       'global': {value: null, matchMode: FilterMatchMode.CONTAINS},

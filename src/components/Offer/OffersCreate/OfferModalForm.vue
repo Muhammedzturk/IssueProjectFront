@@ -73,13 +73,10 @@
           </div>
         </div>
       </div>
-
       <template #footer>
         <Button style="width: 100px" class="p-button-sm p-button-raised p-button-success" label="Ekle" icon="pi pi-check" @click="addOfferData" />
       </template>
     </Dialog>
-
-
 </template>
 
 <script>
@@ -90,10 +87,14 @@ import {useToast} from "primevue/usetoast";
 
 export default {
   name: "OfferModalForm",
-  emits: ['dialog-data','error-info'],
-  props:['profitTop'],
+  emits: ['dialog-data','error-info','update:errorDisplay' ],
+  props:['profitTop','errorDisplay'],
   setup(props,{ emit }){
     const toast = useToast();
+    const display = computed({
+      get: () => props.errorDisplay,
+      set: (value) => emit(`update:errorDisplay`, value)
+    })
     const rules = computed(() => {
       return {
         selectedCompany: {required},
@@ -144,14 +145,17 @@ export default {
     const displayModal = ref(false);
     const filteredOffers=ref(null);
     const filteredCompany=ref(null);
+    console.log("display.value",display.value)
+
     //methods
     const openModal = () => {
       displayModal.value = true;
       state.id+=1;
+      display.value = false
     };
     const addOfferData = () => {
-      v$.value.$validate();
       submitted.value=true
+      v$.value.$validate();
       if(!v$.value.$error){
         //success
         if(props.profitTop.value == null && props.profitTop.currency ==null){
@@ -193,7 +197,15 @@ export default {
       const calcProfit = cost+(cost*((profit)/100));
           state.totalPrice = calcProfit;
     });
-
+    watch(() => display.value,(value) => {
+      console.log("display Computed",value)
+      if(value){
+        v$.value.$validate();
+        if(v$.value.$error){
+          displayModal.value = true
+        }
+      }
+    })
     return{
       displayModal,
       definition,
@@ -207,7 +219,8 @@ export default {
       searchOffer,
       v$,
       state,
-      submitted
+      submitted,
+      display
     }
   }
 }

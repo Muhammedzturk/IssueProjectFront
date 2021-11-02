@@ -139,7 +139,6 @@ export default {
        }
      })
       const v$ = useVuelidate(rules, state);
-      console.log("v$ top",v$)
       v$.value.$validate();
       if(!v$.value.$error){
         emit("offer-top-data",state)

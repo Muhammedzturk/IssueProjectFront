@@ -5,12 +5,10 @@
         <offer-top
         @profit-data="profitDataValue"
         :check="check"
-
         ></offer-top>
         <offer-add
         :profitTop="profitTop"
         @error-check="errorCheck"
-
         ></offer-add>
         </div>
       </div>
@@ -33,13 +31,10 @@ export default {
 
     const check=ref('')
     const errorCheck = (checkData) => {
-      console.log("error check",checkData)
       check.value=checkData
     }
     const profitDataValue = (data) => {
-      console.log("ProfitDataValue22",data)
       profitTop.value = data
-      console.log(" profitTop.value", profitTop.value)
     }
 
     return{

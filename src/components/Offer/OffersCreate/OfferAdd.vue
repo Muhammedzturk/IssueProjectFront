@@ -63,7 +63,11 @@
             </div>
         </TabPanel>
       </TabView>
-      <offer-modal-form  @dialog-data="CalcPrice" :profitTop="profitTop" @error-info="errorInfo">
+      <offer-modal-form
+          @dialog-data="CalcPrice"
+          :profitTop="profitTop"
+          :errorDisplay="displayModal"
+          @error-info="errorInfo">
         <Button label="Kaydet" class="p-button-success" @click="save"/>
       </offer-modal-form>
     </div>
@@ -97,7 +101,12 @@ export default {
     const editingRows = ref([]);
     const id = ref(0)
     const active = ref(0);
+    const checkError = ref(true);
     const offers = ref(null);
+
+    const displayModal = ref(false)
+
+    console.log("displayModal",displayModal.value)
     const unit = ref([
       {label: 'TL', value: 'TL'},
       {label: 'Euro', value: 'EURO'},
@@ -117,9 +126,10 @@ export default {
     })
 
     const v$ = useVuelidate(rules, state);
-    v$.value.$validate();
+
     //methods
     const save = () => {
+      v$.value.$validate();
       emit("error-check",true)
       if(v$.value.$error){
       if(v$.value.commercialTerms.$error){
@@ -133,6 +143,7 @@ export default {
         return;
       }else{
         active.value=0
+        displayModal.value= true
       }
       }
     }
@@ -145,8 +156,6 @@ export default {
       toast.add({severity:'warn', summary: 'Teklif Detay Silindi.', life: 3000});
     }
     const updatedValue = (data) => {
-      console.log("offers.valuesss",offers.value)
-      //let findValue = offers.value.filter(f => f.id == data.id);
       let index = findIndexById(data.id)
       offers.value[index] = data;
     }
@@ -203,7 +212,8 @@ export default {
       rules,
       state,
       id,
-      productService, editingRows,  offers, unit,active,
+      checkError,
+      productService, editingRows,  offers, unit,active,displayModal,
       CalcPrice,
       getUnitLabel,
       save,
@@ -212,7 +222,6 @@ export default {
       findIndexById,
       onRowReorder,
       deleteOffer,
-
 
     };
   },
